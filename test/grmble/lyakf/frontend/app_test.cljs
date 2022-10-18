@@ -4,5 +4,4 @@
    [grmble.lyakf.frontend.app :as app]))
 
 (deftest init-test
-  (is (nil? (app/init)))
   (is (= 1 1)))
