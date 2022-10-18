@@ -1,0 +1,9 @@
+# ide
+/.clj-kondo/.cache/
+/.lsp/.cache/
+/.calva/output-window/
+
+# shadow-cljs + npm/yarn
+/.shadow-cljs/
+/node_modules/
+/public/js/

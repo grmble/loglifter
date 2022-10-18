@@ -1,0 +1,6 @@
+{
+  "license": "MIT",
+  "devDependencies": {
+    "shadow-cljs": "^2.20.5"
+  }
+}

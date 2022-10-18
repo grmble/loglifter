@@ -1,0 +1,11 @@
+{:source-paths ["src" "test"]
+ :dev-http {8080 "public"}
+ :builds
+ {:app
+  {:target :browser
+   :modules {:main {:init-fn grmble.lyakf.frontend.app/init}}}
+
+  :test
+  {:target :node-test
+   :output-to "public/js/test.js"
+   :autorun true}}}
