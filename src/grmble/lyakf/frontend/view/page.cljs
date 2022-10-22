@@ -6,9 +6,9 @@
    [reagent.core :as r]
    [kee-frame.core :as k]))
 
-(defn nav-link [current-tab uri title tab]
+(defn nav-link [current-tab title tab]
   [:a.navbar-item
-   {:href   uri
+   {:href  (k/path-for [tab])
     :class (when (= tab current-tab) "is-active")}
    title])
 
@@ -16,7 +16,8 @@
   (r/with-let [expanded? (r/atom false)]
     [:nav.navbar.is-info>div.container
      [:div.navbar-brand
-      [:a.navbar-item {:href "/" :style {:font-weight :bold}} "Learn You A Kee-Frame"]
+      [:a.navbar-item {:href  (k/path-for [:home])
+                       :style {:font-weight :bold}} "Learn You A Kee-Frame"]
       [:span.navbar-burger.burger
        {:data-target :nav-menu
         :on-click #(swap! expanded? not)
@@ -25,11 +26,11 @@
      [:div#nav-menu.navbar-menu
       {:class (when @expanded? :is-active)}
       [:div.navbar-start
-       [nav-link tab "#/" "Home" :home]
-       [nav-link tab "#/data" "Data" :data]
-       [nav-link tab "#/config" "Config" :config]
+       [nav-link tab "Home" :home]
+       [nav-link tab "Data" :data]
+       [nav-link tab "Config" :config]
        (when (<sub [:show-dev-tab?])
-         [nav-link tab "#/dev" "Dev" :dev])]]]))
+         [nav-link tab "Dev" :dev])]]]))
 
 
 (def click-count (r/atom 0))

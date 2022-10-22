@@ -9,6 +9,7 @@
    [:h1.title "Development Tools"]
    [:h2.subtitle "Useful Links"]
    [:ul
+    (link-entry "Babashka Book" "https://book.babashka.org/")
     [link-entry "Bulma Docs" "https://bulma.io/documentation/"]
     [link-entry "Clojure Spec Guide" "https://clojure.org/guides/spec"]
     [link-entry "ClojureScript Cheatsheet" "https://cljs.info/cheatsheet/"]

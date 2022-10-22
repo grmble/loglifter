@@ -1,0 +1,22 @@
+{:tasks
+ {clean {:doc "Remove 'public/js' folder."
+         :requires ([babashka.fs :as fs])
+         :task (do (println "Removing folder 'public/js'.")
+                   (fs/delete-tree "public/js"))}
+  build {:doc "Release build with custom base path.
+               
+               An optional partX can be given, a BASE-PATH will be constructed."
+         :depends [clean]
+         :task (let [part (first *command-line-args*)
+                     base-path (if part
+                                 (str "/learn-you-a-keeframe/" part)
+                                 "")]
+                 (println "Build for deployment.")
+                 (shell (str "yarn shadow-cljs release app --config-merge "
+                             "'{:closure-defines "
+                             "  {grmble.lyakf.frontend.main/DEBUG false "
+                             "   grmble.lyakf.frontend.main/BASE-PATH "
+                             (pr-str base-path)
+                             "}}'"))
+                 (println "Creating tar in /tmp/learn-you-a-keeframe.tar")
+                 (shell {:dir "public"} "tar cvf /tmp/learn-you-a-keeframe.tar ."))}}}

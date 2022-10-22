@@ -13,11 +13,15 @@
 ;; compile time constant - (when DEBUG ...) will be optimized away
 (goog-define ^boolean DEBUG true)
 
+;; another compile time constant - base-path for router
+(goog-define ^String BASE-PATH "")
+
 ;; println prints to the browser console
 (enable-console-print!)
 
 (def routes
-  [["/" :home]
+  [BASE-PATH
+   ["/" :home]
    ["/data" :data]
    ["/config" :config]
    ["/dev" :dev]])
@@ -61,7 +65,10 @@
              :root-component [loader [page/current-page]]
              :initial-db initial-db
              :app-db-spec ::grmble.lyakf.frontend.spec/db-spec
-             :routes routes}))
+             :routes routes
+             ;; route-hashing does not work with gh pages deployment
+             ;; via compile time BASE-PATH
+             :hash-routing? false}))
 (defn init! []
   (>evt [:load-config])
   (after-load!)
