@@ -1,5 +1,5 @@
 {
-  "license": "MIT",
+  "license": "EPL-2",
   "devDependencies": {
     "shadow-cljs": "^2.20.5"
   },

@@ -2,6 +2,7 @@
 /.clj-kondo/.cache/
 /.lsp/.cache/
 /.calva/output-window/
+/.nrepl-port
 
 # shadow-cljs + npm/yarn
 /.shadow-cljs/
