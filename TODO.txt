@@ -1,0 +1,12 @@
+(Z) PWA
+(Z) configurable training programs
+(Z) historical data and charts
+(Z) storage
+find reducers and change argument order
+
+
+x (A) license +part3
+x (B) wizard +part3
+x rename completed? to repsets +part3
+x rename greyskull-lp to gp-upper-split +part3
+x rename template to suggestion, wizard-template wizard-suggestion +part3

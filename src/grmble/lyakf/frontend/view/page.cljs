@@ -1,7 +1,10 @@
 (ns grmble.lyakf.frontend.view.page
   "Common page layout"
   (:require
+   [grmble.lyakf.frontend.view.data :as data]
    [grmble.lyakf.frontend.view.dev :as dev]
+   [grmble.lyakf.frontend.view.home :as home]
+   [grmble.lyakf.frontend.view.config :as config]
    [grmble.lyakf.frontend.util :refer [<sub]]
    [reagent.core :as r]
    [kee-frame.core :as k]))
@@ -32,34 +35,19 @@
        (when (<sub [:show-dev-tab?])
          [nav-link tab "Dev" :dev])]]]))
 
-
-(def click-count (r/atom 0))
-
-(defn counting-component []
-  [:div
-   "The atom " [:code "click-count"] " has value: "
-   @click-count ". "
-   [:br]
-   [:input {:type "button" :value "Inc"
-            :on-click #(swap! click-count inc)}]
-   [:br]
-   [:input {:type "button" :value "Dec"
-            :on-click #(swap! click-count dec)}]])
+(defn footer []
+  [:footer.footer
+   [:div.content.has-text-centered
+    [:p "Read the source, Luke! "
+     [:a {:href "https://github.com/grmble/learn-you-a-keeframe/"}
+      "https://github.com/grmble/learn-you-a-keeframe/"]
+     " - "
+     [:a {:href "https://opensource.org/licenses/EPL-2.0"} "EPL 2.0"]]]])
 
 (defn show-tab [tab component]
   [:<>
    [navbar tab]
    component])
-
-(defn home-tab []
-  [counting-component])
-
-(defn data-tab []
-  [:div "Data"])
-
-(defn config-tab []
-  [:div "Config"])
-
 
 (defn loading-tab []
   [:button.button.is-loading.is-warning])
@@ -69,9 +57,9 @@
 (defn current-page []
   [:<>
    (k/case-route (comp :name :data)
-                 :home [show-tab :home [home-tab]]
-                 :data [show-tab :data [data-tab]]
-                 :config [show-tab :config [config-tab]]
+                 :home [show-tab :home [home/home-tab]]
+                 :data [show-tab :data [data/data-tab]]
+                 :config [show-tab :config [config/config-tab]]
                  :dev [show-tab :dev [dev/dev-tab]]
                  [loading-tab])])
 

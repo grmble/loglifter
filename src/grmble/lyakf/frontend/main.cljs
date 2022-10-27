@@ -1,7 +1,8 @@
 (ns grmble.lyakf.frontend.main
   (:require
-   [grmble.lyakf.frontend.spec]
-   [grmble.lyakf.frontend.subscriptions]
+   [grmble.lyakf.frontend.model :as  model]
+   [grmble.lyakf.frontend.event]
+   [grmble.lyakf.frontend.sub]
    [grmble.lyakf.frontend.view.page :as page]
    [grmble.lyakf.frontend.util :refer [<sub >evt]]
    [day8.re-frame.http-fx]
@@ -63,8 +64,8 @@
 (defn ^:dev/after-load after-load! []
   (k/start! {;; renders into dom element #app - hard coded
              :root-component [loader [page/current-page]]
-             :initial-db initial-db
-             :app-db-spec ::grmble.lyakf.frontend.spec/db-spec
+             :initial-db model/default-db
+             :app-db-spec :grmble.lyakf.frontend.model/db-spec
              :routes routes
              ;; route-hashing does not work with gh pages deployment
              ;; via compile time BASE-PATH
