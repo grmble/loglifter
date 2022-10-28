@@ -21,17 +21,11 @@
 (enable-console-print!)
 
 (def routes
-  [BASE-PATH
-   ["/" :home]
+  [["/" :home]
    ["/data" :data]
    ["/config" :config]
    ["/dev" :dev]])
 
-(def initial-db
-  {:ui {:initialized? false
-        :current-tab :home}
-   :config {:show-dev-tab? false}
-   :training-programs {}})
 
 ;;
 ;; https://day8.github.io/re-frame/Loading-Initial-Data/
@@ -67,9 +61,8 @@
              :initial-db model/default-db
              :app-db-spec :grmble.lyakf.frontend.model/db-spec
              :routes routes
-             ;; route-hashing does not work with gh pages deployment
-             ;; via compile time BASE-PATH
-             :hash-routing? false}))
+             :hash-routing? true
+             :base-path BASE-PATH}))
 (defn init! []
   (>evt [:load-config])
   (after-load!)

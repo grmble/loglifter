@@ -21,7 +21,6 @@
             swap-controlled-value #(reset! changed-value (-> % .-target .-value))]
 
         [:form {:on-submit (fn [evt]
-                             (println "completing" value)
                              (>evt [:complete selector value])
                              (.preventDefault evt))}
          [:div.field.is-horizontal
@@ -31,13 +30,13 @@
            [:div.control
             [:input.input
              (if repsets
-             ;; react complain about changing from controlled to uncontrolled
-             ;; so we control the disabled component too ...
+               ;; react complain about changing from controlled to uncontrolled
+               ;; so we control the disabled component too ...
                {:type "text" :value value :disabled true
                 :on-change swap-controlled-value}
                {:type "text"
-              ;; this seems to go to the last element with auto-focus
-              ;; so we only set it for the one we want to win
+                ;; this seems to go to the last element with auto-focus
+                ;; so we only set it for the one we want to win
                 :auto-focus (identical? selector focus)
                 :value value
                 :class [(when invalid? "is-danger")]

@@ -96,9 +96,10 @@
         (s/map-of integer?
                   (s/map-of integer? ::exercise-data))))
 
-;; a selector is vector of indices that points to a exercise-ref
+;; a selector is vector of indices that points to an exercise-ref
 ;; it is either [w x] as in Workout and eXercise
-;; or [x x a na] as in Workout, eXercise, Alternative, Number of Alternatives
+;; or  `{:path [w x a] :number-of-alternatives na} 
+;; as in Workout, eXercise, Alternative, Number of Alternatives
 (defrecord Selector [path number-alternatives])
 
 
@@ -213,6 +214,7 @@
 
   (def data nil)
   (def sels (current-selectors glp-upper-split data))
+  (pprint sels)
   (def data (complete true glp-upper-split data (first sels)))
   (def data (complete true glp-upper-split data (second sels)))
   (pprint data)

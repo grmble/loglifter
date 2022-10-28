@@ -1,12 +1,18 @@
-(Z) PWA
-(Z) configurable training programs
-(Z) historical data and charts
-(Z) storage
+(A) focus first uncompleted exercise after completion +part3
+(B) storage +storage
+(C) PWA +pwa
+(D) historical data and charts +charts
+(Z) configurable training programs +configurator
+(Z) support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight
+(Z) weight tracker
+(Z) UX improvements (error on blur, instant feedback on correction) - state charts?
+
 find reducers and change argument order
 
 
+x (A) base-path with hash routing for github deployment +part3
 x (A) license +part3
-x (B) wizard +part3
+x (B) wizard +wizard +part3
 x rename completed? to repsets +part3
 x rename greyskull-lp to gp-upper-split +part3
 x rename template to suggestion, wizard-template wizard-suggestion +part3

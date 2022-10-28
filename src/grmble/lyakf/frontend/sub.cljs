@@ -67,7 +67,6 @@
                               exercise  (->> xref
                                              :slug
                                              exercises)]
-                          (println "sel:" sel "completed:" completed)
                           {:exercise exercise
                            :selector sel
                            :repsets completed
