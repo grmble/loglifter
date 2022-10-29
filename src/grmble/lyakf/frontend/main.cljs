@@ -11,9 +11,8 @@
    [kee-frame.core :as k]
    [kee-frame.error :as error]))
 
-;; compile time constant - (when DEBUG ...) will be optimized away
-(goog-define ^boolean DEBUG true)
-
+;; for DEBUG switch use predefined goog.DEBUG
+;;
 ;; another compile time constant - base-path for router
 (goog-define ^String BASE-PATH "")
 

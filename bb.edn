@@ -14,9 +14,8 @@
                  (println "Build for deployment.")
                  (shell (str "yarn shadow-cljs release app --config-merge "
                              "'{:closure-defines "
-                             "  {grmble.lyakf.frontend.main/DEBUG false "
-                             "   grmble.lyakf.frontend.main/BASE-PATH "
+                             "  {grmble.lyakf.frontend.main/BASE-PATH "
                              (pr-str base-path)
                              "}}'"))
                  (println "Creating tar in /tmp/learn-you-a-keeframe.tar")
-                 (shell {:dir "public"} "tar cvf /tmp/learn-you-a-keeframe.tar ."))}}}
+                 (shell {:dir "public"} "tar zcvf /tmp/learn-you-a-keeframe.tar ."))}}}
