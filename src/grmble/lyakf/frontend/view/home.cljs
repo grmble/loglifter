@@ -16,7 +16,8 @@
       (when (= @prop-value @changed-value)
         (reset! changed-value nil))
 
-      (let [value    (or @changed-value @prop-value)
+      (let [id       (pr-str (:path selector))
+            value    (or @changed-value @prop-value)
             invalid? (parser/field-invalid? value)
             swap-controlled-value #(reset! changed-value (-> % .-target .-value))]
 
@@ -25,22 +26,18 @@
                              (.preventDefault evt))}
          [:div.field.is-horizontal
           [:div.field-label.is-normal
-           [:label.label name]]
+           [:label.label {:for id} name]]
           [:div.field-body.has-addons
            [:div.control
             [:input.input
-             (if repsets
-               ;; react complain about changing from controlled to uncontrolled
-               ;; so we control the disabled component too ...
-               {:type "text" :value value :disabled true
-                :on-change swap-controlled-value}
-               {:type "text"
-                ;; this seems to go to the last element with auto-focus
-                ;; so we only set it for the one we want to win
-                :auto-focus (identical? selector focus)
-                :value value
-                :class [(when invalid? "is-danger")]
-                :on-change swap-controlled-value})]]
+             (-> (if repsets
+                   {:disabled true}
+                   {:auto-focus (identical? selector focus)
+                    :class [(when invalid? "is-danger")]})
+                 (assoc :id id
+                        :type "text"
+                        :value value
+                        :on-change swap-controlled-value))]]
            [:div.control
             (cond
               repsets [:button.button.is-primary {:disabled true} check-mark]

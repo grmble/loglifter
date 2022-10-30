@@ -7,16 +7,7 @@ const appShellFiles = [
     '/js/register_sw.js',
     '/config.json',
     '/manifest.json',
-    // app should work without these
-    /*
-    '/icons/favicon-16x16.png',
-    '/icons/favicon.ico',
-    '/icons/android-chrome-192x192.png',
-    '/icons/apple-touch-icon.png',
-    '/icons/about.txt',
-    '/icons/android-chrome-512x512.png',
-    '/icons/favicon-32x32.png',
-    */
+    // no favicons!
 ]
 const cacheContent = appShellFiles.map(v => basePath + v)
 
@@ -29,35 +20,24 @@ self.addEventListener('install', (e) => {
     })())
 })
 
-addEventListener('activate', event => {
-    event.waitUntil(async function () {
-        if (self.registration.navigationPreload) {
-            await self.registration.navigationPreload.enable()
-        }
-    }())
-    self.clients.claim();
+addEventListener('activate', e => {
+    self.clients.claim()
 })
 
-self.addEventListener('fetch', (e) => {
-    e.respondWith((async () => {
-        let r = await caches.match(e.request)
-        if (r) {
-            // console.log(`[Service Worker] Cached resource: ${e.request.url}`)
-            return r
+// stale while revalidate from https://web.dev/learn/pwa/serving/
+// for ease of update
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.match(event.request).then(cachedResponse => {
+            const networkFetch = fetch(event.request).then(response => {
+                // update the cache with a clone of the network response
+                caches.open(cacheName).then(cache => {
+                    cache.put(event.request, response.clone());
+                });
+            });
+            // prioritize cached response over network
+            return cachedResponse || networkFetch;
         }
-
-        const cache = await caches.open(cacheName)
-
-        r = await e.preloadResponse
-        if (r) {
-            // this is to prio browser navigation while a service
-            // worker is busy caching all the things
-            // will not happen for lyakf anyway - there is only 1 page
-            return r
-        }
-
-        const response = await fetch(e.request)
-        // cache.put(e.request, response.clone())
-        return response
-    })());
-})
+        )
+    )
+});

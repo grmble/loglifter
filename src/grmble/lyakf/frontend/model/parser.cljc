@@ -26,8 +26,8 @@
         annotation = <'@'> #'\\w+';
         "))
 
-(defparser field-parser (parser-text ".") :start :repsets)
-
+(time
+ (defparser field-parser (parser-text ".") :start :repsets))
 
 (defn parse-field [s]
   (insta/parse field-parser s))
