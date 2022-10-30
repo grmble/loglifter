@@ -10,5 +10,7 @@
 /public/js/
 /.cpcache/
 
-# personal preferences
+# build output and ignorables
 *.x
+*.tgz
+.DS_Store

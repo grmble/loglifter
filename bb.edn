@@ -1,21 +1,54 @@
-{:tasks
- {clean {:doc "Remove 'public/js' folder."
-         :requires ([babashka.fs :as fs])
-         :task (do (println "Removing folder 'public/js'.")
-                   (fs/delete-tree "public/js"))}
-  build {:doc "Release build with custom base path.
+{:paths ["scripts"]
+ :tasks
+ {:init    (def task-opts (let [part (first *command-line-args*)
+                                base-path (if part (str "/learn-you-a-keeframe/" part) "")
+                                debug?    (not part)]
+                            {:base-path base-path
+                             :debug?    debug?}))
+  clean    {:doc "Remove 'public/{js,index.html,lyakf.webmanifest}."
+            :requires ([babashka.fs :as fs])
+            :task (do (println "Removing 'public/{js,index.html,lyakf.webmanifest}.")
+                      (fs/delete-tree "public/js")
+                      (fs/delete-if-exists "public/index.html")
+                      (fs/delete-if-exists "public/lyakf.webmanifest"))}
+  template {:doc "Re-generate files from templates.
+                  
+                  Anything that needs to change depending on debug/release build,
+                  base path, ...
+
+                  * public/index.html
+                  * public/lyakf.webmanifest
+                  * public/js/register_sw.js
+                  * public/js/sw.js"
+            :task (exec 'generate-sw/task)}
+  start    {:doc "Start the shadow-cljs server."
+            :task (shell "yarn shadow-cljs start")}
+  stop     {:doc "Stop the shadow-cljs server."
+            :task (shell "yarn shadow-cljs stop")}
+  watch    {:doc "Watch shadow-cljs app."
+            :depends [clean template]
+            :task (shell "yarn shadow-cljs watch app")}
+  watcht   {:doc "Watch shadow-cljs app+test."
+            :depends [clean template]
+            :task (shell "yarn shadow-cljs watch app test")}
+  release  {:doc "Release build with custom base path.
                
                An optional partX can be given, a BASE-PATH will be constructed."
-         :depends [clean]
-         :task (let [part (first *command-line-args*)
-                     base-path (if part
-                                 (str "/learn-you-a-keeframe/" part)
-                                 "")]
-                 (println "Build for deployment.")
-                 (shell (str "yarn shadow-cljs release app --config-merge "
-                             "'{:closure-defines "
-                             "  {grmble.lyakf.frontend.main/BASE-PATH "
-                             (pr-str base-path)
-                             "}}'"))
-                 (println "Creating tar in /tmp/learn-you-a-keeframe.tar")
-                 (shell {:dir "public"} "tar zcvf /tmp/learn-you-a-keeframe.tar ."))}}}
+            :requires ([babashka.fs :as fs])
+            :depends [clean template]
+            :task (let [{base-path :base-path} task-opts]
+                    (println "Build for deployment.")
+                    (shell (str "yarn shadow-cljs release app --config-merge "
+                                "'{:closure-defines "
+                                "  {grmble.lyakf.frontend.main/BASE-PATH "
+                                (pr-str base-path)
+                                "}}'"))
+                    (fs/delete "public/js/main.js.map")
+                    (println "Creating learn-you-a-keeframe.tgz")
+                    (shell {:dir "public"} "tar zcvf ../learn-you-a-keeframe.tgz ."))}}}
+
+
+(comment
+
+  (mapcat identity {:a 1 :b 2})
+  (flatten (for [[k v] {:a 1 :b 2}] [k v])))

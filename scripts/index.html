@@ -7,10 +7,10 @@
     <meta description="Example PWA using re-frame/kee-frame" />
     <link rel="stylesheet" href="css/bulma.min.css">
     <script src="js/main.js" defer></script>
-    
+    {% if not debug? %}
     <link rel="manifest" href="lyakf.webmanifest">
     <script src="js/register_sw.js" defer></script>
-    
+    {% endif %}
 </head>
 
 <body>

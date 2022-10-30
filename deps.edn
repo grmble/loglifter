@@ -29,4 +29,10 @@
                 re-frisk/re-frisk               {:mvn/version "1.6.0"}}}
   :kibit
   {:extra-deps {tvaughan/kibit-runner           {:mvn/version "1.0.1"}}
-   :main-opts ["-m" "kibit-runner.cmdline"]}}}
+   :main-opts ["-m" "kibit-runner.cmdline"]}
+
+  ;; bb code in a clojure repl is nicer for development
+  :babashka
+  {:extra-paths ["scripts"]
+   :extra-deps {babashka/fs                     {:mvn/version "0.1.11"}
+                selmer/selmer                   {:mvn/version "1.12.55"}}}}}
