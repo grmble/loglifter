@@ -15,9 +15,9 @@
 
   (when-not debug?
     (.mkdir (java.io.File. "public/js"))
-    (copy-template "lyakf.webmanifest" "public/lyakf.webmanifest" opts)
+    (copy-template "manifest.json" "public/manifest.json" opts)
     (copy-template "register_sw.js" "public/js/register_sw.js" opts)
-    (copy-template "sw.js" "public/js/sw.js" opts)))
+    (copy-template "sw.js" "public/sw.js" opts)))
 
 ;; empty main because a babaskha task needs a function
 ;; but will execute the guard too

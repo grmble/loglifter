@@ -5,21 +5,22 @@
                                 debug?    (not part)]
                             {:base-path base-path
                              :debug?    debug?}))
-  clean    {:doc "Remove 'public/{js,index.html,lyakf.webmanifest}."
+  clean    {:doc "Remove 'public/{js,index.html,manifest.json}."
             :requires ([babashka.fs :as fs])
-            :task (do (println "Removing 'public/{js,index.html,lyakf.webmanifest}.")
+            :task (do (println "Removing 'public/{js,index.html,sw.js,manifest.json}.")
                       (fs/delete-tree "public/js")
                       (fs/delete-if-exists "public/index.html")
-                      (fs/delete-if-exists "public/lyakf.webmanifest"))}
+                      (fs/delete-if-exists "public/sw.js")
+                      (fs/delete-if-exists "public/manifest.json"))}
   template {:doc "Re-generate files from templates.
                   
                   Anything that needs to change depending on debug/release build,
                   base path, ...
 
                   * public/index.html
-                  * public/lyakf.webmanifest
+                  * public/manifest.json
                   * public/js/register_sw.js
-                  * public/js/sw.js"
+                  * public/sw.js"
             :task (exec 'generate-sw/task)}
   start    {:doc "Start the shadow-cljs server."
             :task (shell "yarn shadow-cljs start")}

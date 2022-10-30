@@ -5,10 +5,12 @@
     <meta charset="utf-8" />
     <title>Learn You A Kee-Frame</title>
     <meta description="Example PWA using re-frame/kee-frame" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bulma.min.css">
     <script src="js/main.js" defer></script>
     {% if not debug? %}
-    <link rel="manifest" href="lyakf.webmanifest">
+    <!-- google uses manifest.json, will this fix offline mode? -->
+    <link rel="manifest" href="{{ base-path }}/manifest.json">
     <script src="js/register_sw.js" defer></script>
     {% endif %}
 </head>

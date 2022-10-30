@@ -7,10 +7,13 @@
 # shadow-cljs + npm/yarn
 /.shadow-cljs/
 /node_modules/
-/public/js/
 /.cpcache/
 
 # build output and ignorables
+/public/js/
+/public/index.html
+/public/manifest.json
+/public/sw.js
 *.x
 *.tgz
 .DS_Store

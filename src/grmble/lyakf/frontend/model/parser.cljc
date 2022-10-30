@@ -26,13 +26,7 @@
         annotation = <'@'> #'\\w+';
         "))
 
-;; 200ms, we are only doing . right now anyway
-(def field-parser (time (insta/parser (parser-text ".") :start :repsets)))
-
-(comment
-  ;; 200ms as well?
-  (time
-   (defparser field-parser (parser-text ".") :start :repsets)))
+(defparser field-parser (parser-text ".") :start :repsets)
 
 
 (defn parse-field [s]
