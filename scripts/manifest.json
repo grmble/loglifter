@@ -1,6 +1,6 @@
 {
-    "name": "Learn You A Kee-Frame",
-    "short_name": "lyakf",
+    "name": "Learn You A Kee-Frame - {{ part |capitalize}}",
+    "short_name": "lyakf-{{ part }}",
     "description": "Example PWA using re-frame/kee-frame",
     "start_url": "{{ base-path }}/",
     "id": "{{ base-path }}/",

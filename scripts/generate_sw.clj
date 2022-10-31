@@ -30,4 +30,5 @@
             debug?    (not part)]
         (generate-sw-files
          {:base-path base-path
-          :debug?    debug?})))
+          :debug?    debug?
+          :part      part})))

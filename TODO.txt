@@ -13,6 +13,7 @@
 
 x (A) base-path with hash routing for github deployment +part3
 x (A) license +part3
+x (A) reflect part in manifeste.json names +pwa
 x (B) wizard +wizard +part3
 x (C) PWA +pwa
 x (Z) preact +footprint
