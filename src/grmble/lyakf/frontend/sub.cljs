@@ -3,28 +3,23 @@
    [grmble.lyakf.frontend.model.program :as program]
    [re-frame.core :as rf]))
 
-(rf/reg-sub :show-dev-tab?
-            (comp :show-dev-tab? :config))
+;; (fn [db [& args]] (get-in db args))
+;; (fn [db args] (get-in db args))
+(rf/reg-sub :ui get-in)
+(rf/reg-sub :config get-in)
+(rf/reg-sub :current get-in)
 
-(rf/reg-sub :ui :ui)
-
-(rf/reg-sub :exercises :exercises)
-
-(rf/reg-sub :programs :programs)
-
-(rf/reg-sub :current :current)
-
-(rf/reg-sub :initialized?
-            (fn [_qv] (rf/subscribe [:ui]))
-            (fn [ui _]
-              (:initialized? ui)))
+;; safer variant of :exercises - (fn [db _] (:exercises db))
+;; (:exercises {:typo 42} "BOOM") ==> "BOOM"
+(rf/reg-sub :exercises :-> :exercises)
+(rf/reg-sub :programs :-> :programs)
 
 ;; (<sub [:sorted-programs :name])
 (rf/reg-sub :sorted-programs
             (fn [_qv]
               [(rf/subscribe [:programs])
-               (rf/subscribe [:current])])
-            (fn [[programs {:keys [slug]}] [_ key]]
+               (rf/subscribe [:current :slug])])
+            (fn [[programs slug] [_ key]]
               (->> programs
                    (vals)
                    (map (fn [{pslug :slug :as p}] (assoc p :current? (= pslug slug))))
@@ -33,8 +28,8 @@
 (rf/reg-sub :current-program
             (fn [_qv]
               [(rf/subscribe [:programs])
-               (rf/subscribe [:current])])
-            (fn [[programs {:keys [slug]}] _]
+               (rf/subscribe [:current :slug])])
+            (fn [[programs slug] _]
               (programs slug)))
 
 ;; selectors for the current workout
@@ -48,8 +43,8 @@
 (rf/reg-sub :workout-selectors
             (fn [_qv]
               [(rf/subscribe [:current-program])
-               (rf/subscribe [:current])])
-            (fn [[program {:keys [data]}] _]
+               (rf/subscribe [:current :data])])
+            (fn [[program data] _]
               (program/current-selectors program data)))
 
 (rf/reg-sub :current-workout-info
@@ -57,8 +52,8 @@
               [(rf/subscribe [:current-program])
                (rf/subscribe [:exercises])
                (rf/subscribe [:workout-selectors])
-               (rf/subscribe [:current])])
-            (fn [[program exercises selectors {:keys [data]}] _]
+               (rf/subscribe [:current :data])])
+            (fn [[program exercises selectors data] _]
               (let [completed?     (program/mk-completed? data)
                     uncompleted    (remove completed? selectors)]
                 (mapv (fn [sel]

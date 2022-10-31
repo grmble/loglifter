@@ -18,7 +18,7 @@
 
       (let [id       (pr-str (:path selector))
             value    (or @changed-value @prop-value)
-            invalid? (parser/field-invalid? value)
+            invalid? (parser/repsets-invalid? value)
             swap-controlled-value #(reset! changed-value (-> % .-target .-value))]
 
         [:form {:on-submit (fn [evt]

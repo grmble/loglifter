@@ -47,7 +47,7 @@
 
 (defn loader [body]
   (error/boundary
-   (if (and true (<sub [:initialized?]))
+   (if (and true (<sub [:ui :initialized?]))
      body
      [page/loading-page])))
 

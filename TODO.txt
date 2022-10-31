@@ -1,5 +1,4 @@
 (B) storage +storage
-(C) PWA +pwa
 (D) historical data and charts +charts
 (Z) focus first uncompleted exercise after completion +ux
 (Z) configurable training programs +configurator
@@ -15,6 +14,7 @@
 x (A) base-path with hash routing for github deployment +part3
 x (A) license +part3
 x (B) wizard +wizard +part3
+x (C) PWA +pwa
 x (Z) preact +footprint
 x binaryage/devtools on classpath, shadow-cljs should do the rest
 x find reducers and change argument order

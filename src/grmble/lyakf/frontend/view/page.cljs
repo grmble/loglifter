@@ -32,7 +32,7 @@
        [nav-link tab "Home" :home]
        [nav-link tab "Data" :data]
        [nav-link tab "Config" :config]
-       (when (<sub [:show-dev-tab?])
+       (when (<sub [:config :show-dev-tab?])
          [nav-link tab "Dev" :dev])]]]))
 
 (defn footer []
