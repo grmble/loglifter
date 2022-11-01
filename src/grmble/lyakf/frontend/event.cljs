@@ -6,10 +6,10 @@
 
 (defn set-testing-weights [db [_ squat bench overhead deadlift]]
   (-> db
-      (assoc-in [:exercises "squat" :weight] squat)
-      (assoc-in [:exercises "bench" :weight] bench)
-      (assoc-in [:exercises "overhead" :weight] overhead)
-      (assoc-in [:exercises "deadlift" :weight] deadlift)))
+      (assoc-in [:exercises :squat :weight] squat)
+      (assoc-in [:exercises :bench :weight] bench)
+      (assoc-in [:exercises :overhead :weight] overhead)
+      (assoc-in [:exercises :deadlift :weight] deadlift)))
 
 (rf/reg-event-db :set-testing-weights set-testing-weights)
 

@@ -10,7 +10,7 @@
 (s/def ::db-spec (s/keys :req-un [::ui ; transient
                                   ::config ; app config via config.json
                                   ::programs ; hardcoded for now
-                                  ::exercises ; hardcoded for now
+                                  ::exercises ; hardcoded but contains data
                                   ::current ; current program slug and data - local storage
                                   ]))
 
@@ -33,8 +33,9 @@
    :config {:show-dev-tab? false}
    :programs program/default-programs
    :exercises exercise/default-exercises
-   :current {:slug "glp-upper-split" :data {}}})
+   :current {:slug :glp-upper-split :data {}}})
 
 (comment
 
+  (s/explain ::exercises exercise/default-exercises)
   (s/explain ::db-spec default-db))

@@ -37,48 +37,51 @@
 
 (def glp-upper-split
   (map->Program
-   {:slug "glp-upper-split"
+   {:slug :glp-upper-split
     :name "Greyskull LP Upper Body Split"
     :min-days 2
     :workouts
-    [[(->ExerciseRef "squat" :linear repout-suggestion)
-      [(->ExerciseRef "bench" :linear repout-suggestion)
-       (->ExerciseRef "overhead" :linear repout-suggestion)]
-      (->ExerciseRef "deadlift" :linear deadlift-suggestion)]]}))
+    [[(->ExerciseRef :squat :linear repout-suggestion)
+      [(->ExerciseRef :bench :linear repout-suggestion)
+       (->ExerciseRef :overhead :linear repout-suggestion)]
+      (->ExerciseRef :deadlift :linear deadlift-suggestion)]]}))
 
 (def greyskull-lp
   (map->Program
-   {:slug "greyskull-lp"
+   {:slug :greyskull-lp
     :name "Greyskull LP"
     :min-days 2
     :workouts
-    [[(->ExerciseRef "squat" :linear repout-suggestion)
-      (->ExerciseRef "bench" :linear repout-suggestion)
-      (->ExerciseRef "overhead" :linear repout-suggestion)
-      (->ExerciseRef "deadlift" :linear deadlift-suggestion)]]}))
+    [[(->ExerciseRef :squat :linear repout-suggestion)
+      (->ExerciseRef :bench :linear repout-suggestion)
+      (->ExerciseRef :overhead :linear repout-suggestion)
+      (->ExerciseRef :deadlift :linear deadlift-suggestion)]]}))
 
 (def five-three-one
   (map->Program
-   {:slug "five-three-one"
+   {:slug :five-three-one
     :name "Five Three One"
     :min-days 2
     :workouts
-    [[{:slug "squat" :progression :five-three-one :opts :five}
-      {:slug "bench" :progression :five-three-one :opts :five}]
-     [{:slug "deadlift" :progression :five-three-one :opts :five}
-      {:slug "overhead" :progression :five-three-one :opts :five}]
-     [{:slug "squat" :progression :five-three-one :opts :three}
-      {:slug "bench" :progression :five-three-one :opts :three}]
-     [{:slug "deadlift" :progression :five-three-one :opts :three}
-      {:slug "overhead" :progression :five-three-one :opts :three}]
-     [{:slug "squat" :progression :five-three-one :opts :one}
-      {:slug "bench" :progression :five-three-one :opts :one}]
-     [{:slug "deadlift" :progression :five-three-one :opts :one}
-      {:slug "overhead" :progression :five-three-one :opts :one}]
-     [{:slug "squat" :progression :five-three-one :opts :rec}
-      {:slug "bench" :progression :five-three-one :opts :rec}]
-     [{:slug "deadlift" :progression :five-three-one :opts :rec}
-      {:slug "overhead" :progression :five-three-one :opts :rec}]]}))
+    [[(map->ExerciseRef {:slug :squat :progression :five-three-one :opts :five})
+      (map->ExerciseRef {:slug :bench :progression :five-three-one :opts :five})]
+     [(map->ExerciseRef {:slug :deadlift :progression :five-three-one :opts :five})
+      (map->ExerciseRef {:slug :overhead :progression :five-three-one :opts :five})]
+     [(map->ExerciseRef {:slug :squat :progression :five-three-one :opts :three})
+      (map->ExerciseRef {:slug :bench :progression :five-three-one :opts :three})]
+     [(map->ExerciseRef {:slug :deadlift :progression :five-three-one :opts :three})
+      (map->ExerciseRef {:slug :overhead :progression :five-three-one :opts :three})]
+     [(map->ExerciseRef {:slug :squat :progression :five-three-one :opts :one})
+      (map->ExerciseRef {:slug :bench :progression :five-three-one :opts :one})]
+     [(map->ExerciseRef {:slug :deadlift :progression :five-three-one :opts :one})
+      (map->ExerciseRef {:slug :overhead :progression :five-three-one :opts :one})]
+     [(map->ExerciseRef {:slug :squat :progression :five-three-one :opts :rec})
+      (map->ExerciseRef {:slug :bench :progression :five-three-one :opts :rec})]
+     [(map->ExerciseRef {:slug :deadlift :progression :five-three-one :opts :rec})
+      (map->ExerciseRef {:slug :overhead :progression :five-three-one :opts :rec})]]}))
+
+(comment
+  (s/explain ::program five-three-one))
 
 (def default-programs
   (util/map-by :slug [greyskull-lp glp-upper-split five-three-one]))
@@ -301,3 +304,22 @@
 
 (comment
   (multiply-weights (fto-table :five) {:weight 20.0 :round-to 2.5}))
+
+
+(defmulti json->xref
+  "Progression specific JSON deserialization.
+   
+   Linear has string opts, 5-3-1 keywords.
+   
+   Takes a map with keyword keys and string/boolean/vector map values,
+   produces a xref."
+
+  {:arglists '([exercise-ref])}
+  (comp keyword :progression))
+
+(defmethod json->xref :linear
+  [{:keys [slug opts]}]
+  (->ExerciseRef (keyword slug) :linear opts))
+(defmethod json->xref :five-three-one
+  [{:keys [slug opts]}]
+  (->ExerciseRef (keyword slug) :five-three-one (keyword opts)))

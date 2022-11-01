@@ -30,6 +30,7 @@
         [link-entry "Learn PWA" "https://web.dev/learn/pwa/"]
         [link-entry "Medley" "https://weavejester.github.io/medley/medley.core.html"]
         [link-entry "Paredit Visual Guide" "https://calva.io/paredit/#editing"]
+        [link-entry "Pouch DB" "https://pouchdb.com/api.html"]
         [link-entry "Re-Frame Docs" "https://day8.github.io/re-frame/re-frame/"]
         [link-entry "Re-Frame Github" "https://github.com/day8/re-frame"]
         [link-entry "Re-Frame HTTP Fx" "https://github.com/day8/re-frame-http-fx"]

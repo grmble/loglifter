@@ -80,4 +80,3 @@
           ;; upper body exercise with lesser round-to ...
           xref (program/exercise-ref program/five-three-one (second fto-sels))]
       (is (= "12.5x5 15x5 17.5x5+" (program/wizard-suggestion xref exercise/default-exercises))))))
-

@@ -2,9 +2,9 @@
   (:require [clojure.string :as string]))
 
 (defn slug?
-  "Does it start with a-z and only contain a-z,0-9 and -?"
-  [s]
-  (and (string? s) (re-matches #"^[a-z][-a-z0-9]*$" s)))
+  "Is it a keyword, does it start with a-z and only contains a-z,0-9 and -?"
+  [k]
+  (and (keyword? k) (re-matches #"^[a-z][-a-z0-9]*$" (name k))))
 
 (defn live-string?
   "Is it a non-blank string?" [s]
