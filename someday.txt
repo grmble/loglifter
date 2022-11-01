@@ -1,0 +1,6 @@
+configurable training programs +configurator
+support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight
+weight tracker
+compile time conditionalize expound (cljs.pprint!) and spec.alpha  +no-keeframe +footprint
+no timbre, encore, re-chain, cuerdas and pez-clerk (but scrolling!) +no-keeframe +footprint
+

@@ -1,25 +1,5 @@
-(B) storage +storage
-(D) historical data and charts +charts
-(Z) focus first uncompleted exercise after completion +ux
-(Z) configurable training programs +configurator
-(Z) support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight
-(Z) weight tracker
-(Z) UX improvements (error on blur, instant feedback on correction) - state charts? +ux
-(Z) regexp based parser instead of instaparse - unless error messages are shown to user +footprint
-(Z) compile time conditionalize expound (cljs.pprint!) and spec.alpha  +no-keeframe +footprint
-(Z) no timbre, encore, re-chain, cuerdas and pez-clerk (but scrolling!) +no-keeframe +footprint
-
-
-
-x (A) base-path with hash routing for github deployment +part3
-x (A) license +part3
-x (A) reflect part in manifeste.json names +pwa
-x (B) wizard +wizard +part3
-x (C) PWA +pwa
-x (Z) preact +footprint
-x binaryage/devtools on classpath, shadow-cljs should do the rest
-x find reducers and change argument order
-x goog.DEBUG instead of our main/DEBUG - will be false for release builds
-x rename completed? to repsets +part3
-x rename greyskull-lp to gp-upper-split +part3
-x rename template to suggestion, wizard-template wizard-suggestion +part3
+(A) historical data and charts +charts +part5
+(A) focus first uncompleted exercise after completion +ux +part5
+(A) reset exercise from wizard +part5
+(B) storage +storage +part6
+(C) UX improvements (error on blur, instant feedback on correction) - state charts? +ux
