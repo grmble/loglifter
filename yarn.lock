@@ -396,6 +396,11 @@ immediate@3.3.0, immediate@^3.2.3:
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.3.0.tgz#1aef225517836bcdf7f2a2de2600c79ff0269266"
   integrity sha512-HR7EVodfFUdQCTIeySw+WDRFJlPcLOJbXfwwZ7Oom6tjsvZ3bOkCDJHehQC3nxJrv7+f9XecwazynjU8e4Vw3Q==
 
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+  integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
+
 inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
@@ -514,6 +519,13 @@ levelup@4.4.0, levelup@^4.3.2:
     level-iterator-stream "~4.0.0"
     level-supports "~1.0.0"
     xtend "~4.0.0"
+
+lie@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  integrity sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==
+  dependencies:
+    immediate "~3.0.5"
 
 ltgt@2.2.1, ltgt@^2.1.2:
   version "2.2.1"
@@ -634,6 +646,20 @@ pbkdf2@^3.0.3:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
+
+pouchdb-promise@^6.1.2:
+  version "6.4.3"
+  resolved "https://registry.yarnpkg.com/pouchdb-promise/-/pouchdb-promise-6.4.3.tgz#74516f4acf74957b54debd0fb2c0e5b5a68ca7b3"
+  integrity sha512-ruJaSFXwzsxRHQfwNHjQfsj58LBOY1RzGzde4PM5CWINZwFjCQAhZwfMrch2o/0oZT6d+Xtt0HTWhq35p3b0qw==
+  dependencies:
+    lie "3.1.1"
+
+pouchdb-upsert@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/pouchdb-upsert/-/pouchdb-upsert-2.2.0.tgz#42b15e420848f3b294c35060589fdb51cf7f7f5f"
+  integrity sha512-hZceBqSnBLodlHtsJJdGJP9ZN+OHj3IXj8+YCBoHUPpzgLw04wfIOp+PLYROqyL6BODeYF00VFdiX8iIGcCtUw==
+  dependencies:
+    pouchdb-promise "^6.1.2"
 
 pouchdb@^7.3.0:
   version "7.3.0"
