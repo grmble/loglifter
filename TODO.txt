@@ -1,5 +1,6 @@
-(A) historical data and charts +charts +part5
-(A) focus first uncompleted exercise after completion +ux +part5
-(A) reset exercise from wizard +part5
-(B) storage +storage +part6
+(A) history +part5
+(A) storage +storage +part5
+(B) charts +charts +part6
+(B) focus first uncompleted exercise after completion +ux +part6
+(B) reset exercise from wizard +part6
 (C) UX improvements (error on blur, instant feedback on correction) - state charts? +ux

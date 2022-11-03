@@ -2,6 +2,7 @@
   (:require
    [grmble.lyakf.frontend.model :as  model]
    [grmble.lyakf.frontend.event]
+   [grmble.lyakf.frontend.storage.foreign :as foreign]
    [grmble.lyakf.frontend.sub]
    [grmble.lyakf.frontend.view.page :as page]
    [grmble.lyakf.frontend.util :refer [<sub >evt]]
@@ -36,11 +37,13 @@
                                  :response-format (ajax/json-response-format {:keywords? true})
                                  :on-success [:config-loaded]
                                  :on-error [:config-not-found]}}))
-(rf/reg-event-db :config-loaded
-                 (fn [db [_ config]]
-                   (-> db
-                       (assoc :config (merge (:config db) config))
-                       (assoc-in [:ui :initialized?] true))))
+(rf/reg-event-fx :config-loaded
+                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:current :exercises])]
+                 (fn [{:keys [db current exercises]} [_ config]]
+                   {:db (cond-> (assoc db :config (merge (:config db) config))
+                          true      (assoc-in [:ui :initialized?] true)
+                          current   (assoc :current (foreign/js->current current))
+                          exercises (assoc :exercises (foreign/js->exercises exercises)))}))
 (rf/reg-event-db :config-not-found
                  (fn [db _]
                    (assoc-in db [:ui :initialized?] true)))
