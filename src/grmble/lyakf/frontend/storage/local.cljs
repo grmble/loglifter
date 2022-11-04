@@ -2,6 +2,7 @@
   (:require
    [grmble.lyakf.frontend.model]
    [cljs.spec.alpha :as s]
+   [clojure.string :as str]
    [re-frame.core :as rf]))
 
 (def ^:private
@@ -29,7 +30,6 @@
           cofx ks))
 
 (defn append-history
-  "Append a history entry"
   [{:keys [current-date slug repsets]}]
   (let [k     (str prefix "history-" current-date)
         line  (str current-date " " slug " " repsets "\n")
@@ -38,10 +38,27 @@
         lines (str lines line)]
     (js/window.localStorage.setItem k (js/JSON.stringify lines))))
 
+(defn load-history
+  [cofx]
+  (let [history-prefix (str prefix "history-")
+        nr-entries     js/window.localStorage.length]
+    (->> (range 0 nr-entries)
+         (into []
+               (comp
+                (map (fn [i] (js/window.localStorage.key i)))
+                (filter #(str/starts-with? % history-prefix))
+                (map (fn [k]
+                       (some->
+                        (js/window.localStorage.getItem k)
+                        js/JSON.parse)))))
+         (str/join)
+         (assoc cofx :load-history))))
+
 
 (rf/reg-fx ::store store)
 (rf/reg-fx ::append-history append-history)
 (rf/reg-cofx ::load load)
+(rf/reg-cofx ::load-history load-history)
 
 
 (comment

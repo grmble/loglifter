@@ -24,9 +24,16 @@
    ["/config" :config]
    ["/dev" :dev]])
 
+(k/reg-controller :data
+                  {:params (fn [match]
+                             (when (= (get-in match [:data :name]) :data)
+                               true))
+                   :start  [:load-history]
+                   :stop   [:dispose-history]})
+
 (defn loader [body]
   (error/boundary
-   (if (and true (<sub [:ui :initialized?]))
+   (if (and true (<sub [:transient :initialized?]))
      body
      [page/loading-page])))
 

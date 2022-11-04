@@ -5,7 +5,7 @@
 
 ;; (fn [db [& args]] (get-in db args))
 ;; (fn [db args] (get-in db args))
-(rf/reg-sub :ui get-in)
+(rf/reg-sub :transient get-in)
 (rf/reg-sub :config get-in)
 (rf/reg-sub :current get-in)
 

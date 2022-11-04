@@ -7,15 +7,17 @@
    [grmble.lyakf.frontend.model.util :as util]))
 
 
-(s/def ::db-spec (s/keys :req-un [::ui ; transient
+(s/def ::db-spec (s/keys :req-un [::transient
                                   ::config ; app config via config.json
                                   ::programs ; hardcoded for now
                                   ::exercises ; hardcoded but contains data
                                   ::current ; current program slug and data - local storage
                                   ]))
 
-(s/def ::ui (s/keys :req-un [::initialized?]))
+(s/def ::transient (s/keys :req-un [::initialized?]
+                           :opt-un [::history]))
 (s/def ::initialized? boolean?)
+(s/def ::history string?)
 
 (s/def ::config (s/keys :req-un [::show-dev-tab?]))
 (s/def ::show-dev-tab? boolean?)
@@ -31,7 +33,7 @@
   (s/map-of util/slug? :grmble.lyakf.frontend.model.exercise/weight))
 
 (def default-db
-  {:ui {:initialized? false}
+  {:transient {:initialized? false}
    :config {:show-dev-tab? false}
    :programs program/default-programs
    :exercises exercise/default-exercises

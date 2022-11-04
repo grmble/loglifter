@@ -5,6 +5,7 @@
    [grmble.lyakf.frontend.storage.local]
    [grmble.lyakf.frontend.model.program :as program]
    [ajax.core :as ajax]
+   [medley.core :as medley]
    [re-frame.core :as rf]))
 
 ;;
@@ -21,14 +22,14 @@
                  [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:current :exercises :programs])]
                  (fn [{:keys [db current exercises programs]} [_ config]]
                    {:db (cond-> (assoc db :config (merge (:config db) config))
-                          true      (assoc-in [:ui :initialized?] true)
+                          true      (assoc-in [:transient :initialized?] true)
                           current   (assoc :current (foreign/js->current current))
                           exercises (assoc :exercises (foreign/js->exercises exercises))
                           programs  (assoc :programs (foreign/js->programs programs)))}))
 
 (rf/reg-event-db :config-not-found
                  (fn [db _]
-                   (assoc-in db [:ui :initialized?] true)))
+                   (assoc-in db [:transient :initialized?] true)))
 
 
 (defn set-testing-weights [db [_ squat bench overhead deadlift]]
@@ -62,8 +63,9 @@
       (assoc-in current [:weights slug] (double (+ w increment))))))
 
 (defn complete-handler [{:keys [db current-date]} [_ selector repsets]]
-  (let [slug (get-in db [:current :slug])
-        program (-> db :programs (get slug))
+  (let [slug                   (get-in db [:current :slug])
+        program                (-> db :programs (get slug))
+        xref                   (program/exercise-ref program selector)
         [completed-slugs data] (program/complete-with-slugs repsets program
                                                             (-> db :current :data)
                                                             selector)
@@ -77,23 +79,18 @@
       :db db}
      :grmble.lyakf.frontend.storage.local/append-history
      {:current-date current-date
-      :slug slug
+      :slug (:slug xref)
       :repsets repsets}}))
 
 (rf/reg-event-fx :complete
                  [(rf/inject-cofx :current-date)]
                  complete-handler)
 
-(comment
-  (require '[grmble.lyakf.frontend.model])
+(rf/reg-event-fx :load-history
+                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load-history)]
+                 (fn [{:keys [db load-history]} [_]]
+                   {:db (assoc-in db [:transient :history] load-history)}))
 
-  (def db grmble.lyakf.frontend.model/default-db)
-
-  (let [slug (get-in db [:current :slug])
-        program (-> db :programs (get slug))
-        data (-> db :current :data)]
-    (program/complete-with-slugs true program data {:path [0 0]}))
-
-
-
-  (complete-handler db [:complete {:path [0 0]} "asdf"]))
+(rf/reg-event-db :dispose-history
+                 (fn [db [_]]
+                   (medley/dissoc-in db [:transient :history])))
