@@ -28,8 +28,21 @@
                            (js/JSON.parse))))
           cofx ks))
 
+(defn append-history
+  "Append a history entry"
+  [{:keys [current-date slug repsets]}]
+  (let [k     (str prefix "history-" current-date)
+        line  (str current-date " " slug " " repsets "\n")
+        lines (or (js/JSON.parse (js/window.localStorage.getItem k))
+                  "")
+        lines (str lines line)]
+    (js/window.localStorage.setItem k (js/JSON.stringify lines))))
+
+
 (rf/reg-fx ::store store)
+(rf/reg-fx ::append-history append-history)
 (rf/reg-cofx ::load load)
 
 
-
+(comment
+  (or nil #js []))

@@ -1,5 +1,6 @@
 (ns grmble.lyakf.frontend.event
   (:require
+   [grmble.lyakf.frontend.date]
    [grmble.lyakf.frontend.storage.foreign :as foreign]
    [grmble.lyakf.frontend.storage.local]
    [grmble.lyakf.frontend.model.program :as program]
@@ -24,6 +25,7 @@
                           current   (assoc :current (foreign/js->current current))
                           exercises (assoc :exercises (foreign/js->exercises exercises))
                           programs  (assoc :programs (foreign/js->programs programs)))}))
+
 (rf/reg-event-db :config-not-found
                  (fn [db _]
                    (assoc-in db [:ui :initialized?] true)))
@@ -59,7 +61,7 @@
                 weight)]
       (assoc-in current [:weights slug] (double (+ w increment))))))
 
-(defn complete-handler [{:keys [db]} [_ selector repsets]]
+(defn complete-handler [{:keys [db current-date]} [_ selector repsets]]
   (let [slug (get-in db [:current :slug])
         program (-> db :programs (get slug))
         [completed-slugs data] (program/complete-with-slugs repsets program
@@ -72,9 +74,15 @@
     {:db db
      :grmble.lyakf.frontend.storage.local/store
      {:kvs {:current (foreign/current->js (:current db))}
-      :db db}}))
+      :db db}
+     :grmble.lyakf.frontend.storage.local/append-history
+     {:current-date current-date
+      :slug slug
+      :repsets repsets}}))
 
-(rf/reg-event-fx :complete complete-handler)
+(rf/reg-event-fx :complete
+                 [(rf/inject-cofx :current-date)]
+                 complete-handler)
 
 (comment
   (require '[grmble.lyakf.frontend.model])
