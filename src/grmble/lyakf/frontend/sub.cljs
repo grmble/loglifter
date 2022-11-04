@@ -52,20 +52,22 @@
               [(rf/subscribe [:current-program])
                (rf/subscribe [:exercises])
                (rf/subscribe [:workout-selectors])
-               (rf/subscribe [:current :data])])
-            (fn [[program exercises selectors data] _]
+               (rf/subscribe [:current :data])
+               (rf/subscribe [:current :weights])])
+            (fn [[program exercises selectors data weights] _]
               (let [completed?     (program/mk-completed? data)
                     uncompleted    (remove completed? selectors)]
                 (mapv (fn [sel]
                         (let [completed (completed? sel)
                               xref      (program/exercise-ref program sel)
-                              exercise  (->> xref
-                                             :slug
-                                             exercises)]
+                              xn        (:slug xref)
+                              weight    (weights xn)
+                              exercise  (cond-> (exercises xn)
+                                          weight (assoc :weight weight))]
                           {:exercise exercise
                            :selector sel
                            :repsets completed
                            ;; focus seems to go to the LAST element with auto-focus
                            :focus (first uncompleted)
-                           :suggestion (program/wizard-suggestion xref exercises)}))
+                           :suggestion (program/wizard-suggestion xref exercise)}))
                       selectors))))

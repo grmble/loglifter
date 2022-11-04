@@ -20,20 +20,24 @@
 (s/def ::config (s/keys :req-un [::show-dev-tab?]))
 (s/def ::show-dev-tab? boolean?)
 
-(s/def ::current (s/keys :req-un [:grmble.lyakf.frontend.model.program/slug]
+(s/def ::current (s/keys :req-un [:grmble.lyakf.frontend.model.program/slug ::weights]
                          :opt-un [:grmble.lyakf.frontend.model.program/data]))
 
 (s/def ::programs
   (s/map-of util/slug? :grmble.lyakf.frontend.model.program/program))
 (s/def ::exercises
   (s/map-of util/slug? :grmble.lyakf.frontend.model.exercise/exercise))
+(s/def ::weights
+  (s/map-of util/slug? :grmble.lyakf.frontend.model.exercise/weight))
 
 (def default-db
   {:ui {:initialized? false}
    :config {:show-dev-tab? false}
    :programs program/default-programs
    :exercises exercise/default-exercises
-   :current {:slug :glp-upper-split :data {}}})
+   :current {:slug :glp-upper-split
+             :data {}
+             :weights {}}})
 
 (comment
 

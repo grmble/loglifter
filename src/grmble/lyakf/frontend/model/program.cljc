@@ -251,13 +251,12 @@
    a method is called that has to produce a
    suggestion for the exercise."
 
-  {:arglists '([exercise-ref exercises])}
+  {:arglists '([xref exercise])}
   :progression)
 
 (defmethod wizard-suggestion :linear
-  [xref exercises]
-  (let [ex (-> xref :slug exercises)]
-    (cuerdas/format (:opts xref) ex)))
+  [xref exercise]
+  (cuerdas/format (:opts xref) exercise))
 
 (def ^:private fto-table
   {:five  {:weight1 0.65 :reps1 5
@@ -295,9 +294,8 @@
 
 
 (defmethod wizard-suggestion :five-three-one
-  [{opts :opts :as xref} exercises]
-  (let [exercise (-> xref :slug exercises)
-        values (multiply-weights (fto-table opts) exercise)]
+  [{opts :opts} exercise]
+  (let [values (multiply-weights (fto-table opts) exercise)]
     (cuerdas/format
      "%(weight1)sx%(reps1)s %(weight2)sx%(reps2)s %(weight3)sx%(reps3)s"
      values)))

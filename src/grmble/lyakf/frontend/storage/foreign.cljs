@@ -64,4 +64,3 @@
     (-> current
         (assoc :data (decode-data data)
                :slug (keyword slug)))))
-

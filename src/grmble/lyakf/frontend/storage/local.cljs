@@ -5,7 +5,7 @@
    [re-frame.core :as rf]))
 
 (def ^:private
-  prefix "lyakf-v1-")
+  prefix "loglifter-v1-")
 
 (defn store
   "Store the javascript value under the name (given in `:kvs`).

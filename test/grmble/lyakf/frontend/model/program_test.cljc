@@ -72,11 +72,11 @@
   (testing "linear suggestion will use exercise weight"
     (let [gr-sels (program/current-selectors program/glp-upper-split nil)
           xref (program/exercise-ref program/glp-upper-split (first gr-sels))
-          suggestion (program/wizard-suggestion xref exercise/default-exercises)]
+          suggestion (program/wizard-suggestion xref (exercise/default-exercises (:slug xref)))]
       (is (= "20x5x2 20x5x5+" suggestion))))
 
   (testing "five-three-one suggestion will use different weight"
     (let [fto-sels (program/current-selectors program/five-three-one nil)
           ;; upper body exercise with lesser round-to ...
           xref (program/exercise-ref program/five-three-one (second fto-sels))]
-      (is (= "12.5x5 15x5 17.5x5+" (program/wizard-suggestion xref exercise/default-exercises))))))
+      (is (= "12.5x5 15x5 17.5x5+" (program/wizard-suggestion xref (exercise/default-exercises (:slug xref))))))))

@@ -34,10 +34,12 @@
     (is (valid-or-explain :grmble.lyakf.frontend.model/current v))
     (is (= data v))))
 
-(deftest current-data
+(deftest current
   (testing "roundtrip"
     (current-roundtrip {:slug :xxx
+                        :weights {}
                         :data {}})
     (current-roundtrip
      {:slug :xxx
+      :weights {:squat 66.6}
       :data {0 {0 {:completed "xxx"}}}})))
