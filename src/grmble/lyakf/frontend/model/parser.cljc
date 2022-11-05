@@ -1,16 +1,13 @@
 (ns grmble.lyakf.frontend.model.parser
   "Parser for log entries / rep sets"
+  #?(:cljs (:require-macros [grmble.lyakf.frontend.model.parser]))
   (:require
+   [clojure.string :as str]
    #?(:cljs [instaparse.core :as insta :refer-macros [defparser]]
       :clj [instaparse.core :as insta :refer [defparser]])))
 
-;; for defparser to work, the parser needs to be specified
-;; as a string literal
-;; so for our 2 parsers we have to use the same string twice
-;; or write another macro
-;;
-;; but it is worth it: 
-;; 200ms vs 3ms in firefox, 110ms vs 2ms in chrome (for 1 parser)
+;; defparser is a must - it takes reduces loading time be 100-200ms PER PARSER
+;; we need 2, but we have to specify them as string literals
 (defparser repsets-parser
   "entry = (annotation <ws>)* date <ws> slug <ws> repsets <ws?>;
         date = #'\\d{4}-\\d{2}-\\d{2}';
@@ -24,11 +21,52 @@
         annotation = <'@'> #'\\w+';
         "
   :start :repsets)
-
-(defn parse-repsets [s]
-  (insta/parse repsets-parser s))
+(defparser entry-parser
+  "entry = (annotation <ws>)* date <ws> slug <ws> repsets <ws?>;
+        date = #'\\d{4}-\\d{2}-\\d{2}';
+        slug = #'[-\\w]+';
+        repsets = repset (<ws> repset)*;
+        repset = (annotation <ws>)* weight [<ws?> <('x'|'*')> reps [<ws?> <('x'|'*')> sets]];
+        ws = #'\\s+';
+        weight = #'(\\d+)([\\.,]\\d*)?';
+        reps = #'\\d+';
+        sets = #'\\d+';
+        annotation = <'@'> #'\\w+';
+        "
+  :start :entry)
 
 (defn repsets-invalid? [s]
   (-> (insta/parse repsets-parser s)
       (insta/failure?)))
+
+(defn entry-date
+  "Get the date out of a successful entry parse"
+  ([result] (entry-date result 1 (count result)))
+  ([result idx size]
+   (let [[k v] (nth result idx)]
+     (cond
+       (= k :date)    v
+       (>= idx size)  nil
+       :else          (recur result (inc idx) size)))))
+
+(defn- vmap [f]
+  (map (fn [[i v]] [i (f v)])))
+(defn- vremove [f]
+  (remove (fn [[_ v]] (f v))))
+
+(defn- acc-results
+  "Collect entry parser results for [index entry] pairs."
+  [acc [index entry]]
+  (let [result   (insta/parse entry-parser entry)]
+    (if (insta/failure? result)
+      ;; inc zero based index -> 1 based line number
+      (assoc-in acc [:errs (inc index)] result)
+      (update-in acc [:by-date (entry-date result)] (fn [x] (conj (or x []) entry))))))
+
+(defn parse-history [^String history]
+  (->> (map-indexed vector (str/split history #"\n"))
+       (eduction (comp
+                  (vmap str/trim)
+                  (vremove str/blank?)))
+       (reduce acc-results {})))
 

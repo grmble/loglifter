@@ -1,8 +1,13 @@
 (ns grmble.lyakf.frontend.view.data
   (:require
    ["codemirror" :refer [EditorView basicSetup]]
-   [grmble.lyakf.frontend.util :refer [<sub]]
+   [grmble.lyakf.frontend.util :refer [<sub >evt]]
    [reagent.core :as r]))
+
+(defn- codemirror-content [view]
+  (let [jsarray   (some-> view .-state .-doc .-text)
+        history   (.join jsarray "\n")]
+    history))
 
 ;; the inner / outer pattern comes straigt from the docs
 ;; https://day8.github.io/re-frame/Using-Stateful-JS-Components/
@@ -18,7 +23,10 @@
 
     (r/create-class
      {:reagent-render         (fn []
-                                [:div#codemirror])
+                                [:<>
+                                 [:div#codemirror]
+                                 [:div.control
+                                  [:button.button.is-primary {:on-click #(>evt [:save-history (codemirror-content @view)])} "Save"]]])
 
       :component-did-mount    (fn [comp]
                                 (let [elem  (js/document.getElementById "codemirror")

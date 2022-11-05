@@ -6,7 +6,8 @@
    [grmble.lyakf.frontend.model.program :as program]
    [ajax.core :as ajax]
    [medley.core :as medley]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [grmble.lyakf.frontend.model.parser :as parser]))
 
 ;;
 ;; https://day8.github.io/re-frame/Loading-Initial-Data/
@@ -46,6 +47,7 @@
   (let [db (update db :current
                    #(assoc % :slug slug :data nil))]
     {:db db
+
      :grmble.lyakf.frontend.storage.local/store
      {:kvs {"current" (foreign/current->js (:current db))}
       :db db}}))
@@ -74,9 +76,11 @@
                        #(reduce (incrementer (:exercises db)) % completed-slugs))
                (update :current #(assoc % :data data)))]
     {:db db
+
      :grmble.lyakf.frontend.storage.local/store
      {:kvs {:current (foreign/current->js (:current db))}
       :db db}
+
      :grmble.lyakf.frontend.storage.local/append-history
      {:current-date current-date
       :slug (:slug xref)
@@ -94,3 +98,11 @@
 (rf/reg-event-db :dispose-history
                  (fn [db [_]]
                    (medley/dissoc-in db [:transient :history])))
+
+(rf/reg-event-fx :save-history
+                 (fn [{:keys [db]} [_ history]]
+                   (let [result   (parser/parse-history history)]
+                     {:db db
+
+                      :grmble.lyakf.frontend.storage.local/store-history
+                      result})))
