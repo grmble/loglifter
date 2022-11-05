@@ -33,16 +33,6 @@
                    (assoc-in db [:transient :initialized?] true)))
 
 
-(defn set-testing-weights [db [_ squat bench overhead deadlift]]
-  (-> db
-      (assoc-in [:current :weights :squat] squat)
-      (assoc-in [:current :weights :bench] bench)
-      (assoc-in [:current :weights :overhead] overhead)
-      (assoc-in [:current :weights :deadlift] deadlift)))
-
-(rf/reg-event-db :set-testing-weights set-testing-weights)
-
-
 (defn switch-program-handler [{:keys [db]} [_ slug]]
   (let [db (update db :current
                    #(assoc % :slug slug :data nil))]
@@ -89,6 +79,25 @@
 (rf/reg-event-fx :complete
                  [(rf/inject-cofx :current-date)]
                  complete-handler)
+
+(rf/reg-event-db :reset-exercise
+                 (fn [db [_ slug value]]
+                   (assoc-in db [:current :weights slug] (js/parseFloat value))))
+
+(rf/reg-event-fx :snapshot-current
+                 (fn [{:keys [db]} [_]]
+                   {:db db
+
+                    :grmble.lyakf.frontend.storage.local/store
+                    {:kvs {:snapshot (foreign/current->js (:current db))}
+                     :db db}}))
+
+(rf/reg-event-fx :restore-snapshot
+                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:snapshot])]
+                 (fn [{:keys [db snapshot]} [_]]
+                   {:db (cond-> db
+                          snapshot  (assoc :current (foreign/js->current snapshot)))}))
+
 
 (rf/reg-event-fx :load-history
                  [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load-history)]

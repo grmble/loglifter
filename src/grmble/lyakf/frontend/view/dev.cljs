@@ -55,7 +55,11 @@
      [:article
       [:h2.subtitle "Testing"]
       [:div.field
-       [:label.label "Set default exercises to distinct weights"]
-       [:div.control
-        [:button.button.is-primary {:on-click (>evt [:set-testing-weights 80 60 40 90])}
-         "Testing Weights"]]]]]]])
+       [:label.label "Snapshot of :current"]
+       [:div.field.is-grouped
+        [:div.control
+         [:button.button.is-primary {:on-click #(>evt [:snapshot-current])}
+          "Snapshot"]]
+        [:div.control
+         [:button.button {:on-click #(>evt [:restore-snapshot])}
+          "Restore"]]]]]]]])
