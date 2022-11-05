@@ -57,25 +57,26 @@
           [:div.field.is-horizontal
            [:div.field-label.is-normal
             [:label.label {:for id} name]]
-           [:div.field-body.has-addons
-            [:div.control
-             [:input.input
-              (-> (if repsets
-                    {:disabled true}
-                    {:auto-focus (identical? selector focus)
-                     :class [(when invalid? "is-danger")]})
-                  (assoc :id id
-                         :type "text"
-                         :value value
-                         :on-change swap-controlled-value))]]
-            [:div.control
-             (cond
-               repsets [:button.button.is-primary {:type "submit" :title "Complete" :disabled true} check-mark]
-               invalid?   [:button.button.is-danger {:type "submit" :title "Complete" :disabled true} x-mark]
-               :else      [:button.button.is-primary {:type "submit" :title "Complete"} check-mark])]
-            [:div.control
-             [:button.button.is-info {:title "Reset Exercise"
-                                      :on-click toggle-reset} circle-widdershins]]]]]
+           [:div.field-body
+            [:div.field.has-addons
+             [:div.control
+              [:input.input
+               (-> (if repsets
+                     {:disabled true}
+                     {:auto-focus (identical? selector focus)
+                      :class [(when invalid? "is-danger")]})
+                   (assoc :id id
+                          :type "text"
+                          :value value
+                          :on-change swap-controlled-value))]]
+             [:div.control
+              (cond
+                repsets [:button.button.is-primary {:type "submit" :title "Complete" :disabled true} check-mark]
+                invalid?   [:button.button.is-danger {:type "submit" :title "Complete" :disabled true} x-mark]
+                :else      [:button.button.is-primary {:type "submit" :title "Complete"} check-mark])]
+             [:div.control
+              [:button.button.is-info {:title "Reset Exercise"
+                                       :on-click toggle-reset} circle-widdershins]]]]]]
 
          [reset-exercise exercise reset? toggle-reset]]))))
 
