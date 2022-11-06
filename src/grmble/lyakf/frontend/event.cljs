@@ -1,5 +1,6 @@
 (ns grmble.lyakf.frontend.event
   (:require
+   [clojure.string :as str]
    [grmble.lyakf.frontend.date]
    [grmble.lyakf.frontend.storage.foreign :as foreign]
    [grmble.lyakf.frontend.storage.local]
@@ -32,7 +33,20 @@
                  (fn [db _]
                    (assoc-in db [:transient :initialized?] true)))
 
+;;
+;; flash
+;;
+(rf/reg-event-db :flash
+                 (fn [db [_ {:keys [id class msg]}]]
+                   (assoc-in db [:transient :flash id] {:class class :msg msg})))
+(rf/reg-event-db :remove-flash
+                 (fn [db [_ id]]
+                   (medley/dissoc-in db [:transient :flash id])))
 
+
+;;
+;; programs and exercises
+;;
 (defn switch-program-handler [{:keys [db]} [_ slug]]
   (let [db (update db :current
                    #(assoc % :slug slug :data nil))]
@@ -84,6 +98,9 @@
                  (fn [db [_ slug value]]
                    (assoc-in db [:current :weights slug] (js/parseFloat value))))
 
+;;
+;; storage
+;;
 (rf/reg-event-fx :snapshot-current
                  (fn [{:keys [db]} [_]]
                    {:db db
@@ -96,7 +113,11 @@
                  [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:snapshot])]
                  (fn [{:keys [db snapshot]} [_]]
                    {:db (cond-> db
-                          snapshot  (assoc :current (foreign/js->current snapshot)))}))
+                          snapshot  (assoc :current (foreign/js->current snapshot)))
+
+                    :grmble.lyakf.frontend.storage.local/store
+                    {:kvs {:current snapshot}
+                     :db db}}))
 
 
 (rf/reg-event-fx :load-history
@@ -110,8 +131,12 @@
 
 (rf/reg-event-fx :save-history
                  (fn [{:keys [db]} [_ history]]
-                   (let [result   (parser/parse-history history)]
-                     {:db db
+                   (let [{:keys [errs] :as result}   (parser/parse-history history)]
+                     {:db (cond-> db
+                            errs  (assoc-in [:transient :flash :save-history]
+                                            {:class :is-danger
+                                             :msg (str "There were errors in the following lines: "
+                                                       (str/join ", " (keys errs)))}))
 
                       :grmble.lyakf.frontend.storage.local/store-history
                       result})))

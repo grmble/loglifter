@@ -5,7 +5,7 @@
    [grmble.lyakf.frontend.view.dev :as dev]
    [grmble.lyakf.frontend.view.home :as home]
    [grmble.lyakf.frontend.view.config :as config]
-   [grmble.lyakf.frontend.util :refer [<sub]]
+   [grmble.lyakf.frontend.util :refer [<sub >evt]]
    [reagent.core :as r]
    [kee-frame.core :as k]))
 
@@ -35,6 +35,16 @@
        (when (<sub [:config :show-dev-tab?])
          [nav-link tab "Dev" :dev])]]]))
 
+(defn flash []
+  (let [flash (<sub [:flash])]
+    [:ul
+     (for [{:keys [id class msg]} flash]
+       [:li.notification {:key id
+                          :class class
+                          :on-click #(>evt [:remove-flash id])}
+        [:button.delete {:on-click #(>evt [:remove-flash id])}]
+        msg])]))
+
 (defn footer []
   [:footer.footer
    [:div.content.has-text-centered
@@ -47,6 +57,7 @@
 (defn show-tab [tab component]
   [:<>
    [navbar tab]
+   [flash]
    component])
 
 (defn loading-tab []

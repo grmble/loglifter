@@ -1,5 +1,3 @@
-(A) vector -> string -> vector: history items / codemirror +part5
-(B) display errors e.g. when saving from the data tab +ux +part6
 (B) charts +charts +part6
 (B) focus first uncompleted exercise after completion +ux +part6
 (C) UX improvements (error on blur, instant feedback on correction) - state charts? +ux +part6
@@ -7,7 +5,9 @@
 (C) skip workouts +ux +part6
 (C) choose alternative exercise e.g. overhead instead of bench +ux +part6
 
+x (A) display errors e.g. when saving from the data tab +part5
 x (A) history +part5
 x (A) resetting exercises from the wizard +part5
 x (A) snapshot / restore for :current in dev tab +part5
 x (A) storage +storage +part5
+x (A) vector -> string -> vector: history items / codemirror +part5

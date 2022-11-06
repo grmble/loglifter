@@ -14,6 +14,13 @@
 (rf/reg-sub :exercises :-> :exercises)
 (rf/reg-sub :programs :-> :programs)
 
+(rf/reg-sub :flash
+            (fn [_]
+              [(rf/subscribe [:transient :flash])])
+            (fn [[flash] [_]]
+              (for [[id {:keys [class msg]}] flash]
+                {:id id :class class :msg msg})))
+
 ;; (<sub [:sorted-programs :name])
 (rf/reg-sub :sorted-programs
             (fn [_qv]

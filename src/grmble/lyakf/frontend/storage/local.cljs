@@ -57,15 +57,17 @@
   (js/window.localStorage.setItem k (js/JSON.stringify s)))
 
 (defn- format-history-item [{:keys [current-date slug repsets]}]
-  (str current-date " " (name slug) " " repsets "\n"))
+  (str current-date " " (name slug) " " repsets))
 
 
 (defn append-history
   [{:keys [current-date] :as item}]
   (let [k     (history-key current-date)
         line  (format-history-item item)
-        lines (load-history-item k "")
-        lines (str lines line)]
+        lines (load-history-item k)
+        lines (if lines
+                (str lines "\n" line)
+                line)]
     (store-history-item k lines)))
 
 (defn load-history
@@ -77,7 +79,7 @@
               (filter history-key?)
               (map load-history-item)))
        (sort)
-       (str/join)
+       (str/join "\n")
        (assoc cofx :load-history)))
 
 (defn- remove-history

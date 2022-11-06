@@ -63,8 +63,13 @@
       (assoc-in acc [:errs (inc index)] result)
       (update-in acc [:by-date (entry-date result)] (fn [x] (conj (or x []) entry))))))
 
-(defn parse-history [^String history]
-  (->> (map-indexed vector (str/split history #"\n"))
+(defn parse-history
+  "Parse history, either one big string or a collection of lines"
+  [history]
+  (->> (if (string? history)
+         (str/split history #"\n")
+         history)
+       (map-indexed vector)
        (eduction (comp
                   (vmap str/trim)
                   (vremove str/blank?)))

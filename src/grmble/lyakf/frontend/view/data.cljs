@@ -4,10 +4,9 @@
    [grmble.lyakf.frontend.util :refer [<sub >evt]]
    [reagent.core :as r]))
 
-(defn- codemirror-content [view]
-  (let [jsarray   (some-> view .-state .-doc .-text)
-        history   (.join jsarray "\n")]
-    history))
+;; the ^js hint fixes the "can  not infer" warning
+(defn- codemirror-content [^js view]
+  (. (. view -state) sliceDoc))
 
 ;; the inner / outer pattern comes straigt from the docs
 ;; https://day8.github.io/re-frame/Using-Stateful-JS-Components/
@@ -18,7 +17,9 @@
                          state       (.-state @view)
                          length      (or (some-> state .-doc .-length)
                                          0)
-                         transaction (.update state #js {:changes #js {:from 0 :to length :insert history}})]
+                         transaction (.update state #js {:changes #js {:from 0
+                                                                       :to length
+                                                                       :insert history}})]
                      (.dispatch @view transaction)))]
 
     (r/create-class
@@ -26,7 +27,10 @@
                                 [:<>
                                  [:div#codemirror]
                                  [:div.control
-                                  [:button.button.is-primary {:on-click #(>evt [:save-history (codemirror-content @view)])} "Save"]]])
+                                  [:button.button.is-primary
+                                   {:on-click
+                                    #(>evt [:save-history (codemirror-content @view)])}
+                                   "Save"]]])
 
       :component-did-mount    (fn [comp]
                                 (let [elem  (js/document.getElementById "codemirror")

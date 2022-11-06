@@ -2,6 +2,7 @@ configurable training programs +configurator
 support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight +configurator
 weight tracker
 sync to desktop computers and/or other phones +sync
+lezer parser for codemirror syntax hightlighting
 compile time conditionalize expound (cljs.pprint!) and spec.alpha  +no-keeframe +footprint
 no timbre, encore, re-chain, cuerdas and pez-clerk (but scrolling!) +no-keeframe +footprint
 

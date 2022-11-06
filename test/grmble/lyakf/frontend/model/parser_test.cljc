@@ -10,4 +10,7 @@
       (is (= [1 4] (sort-by identity (-> result :errs keys))))
       (is (= ["2022-10-10" "2022-10-12"] (sort-by identity (-> result :by-date keys))))
       (is (= 1 (count (-> result :by-date (get "2022-10-10")))))
-      (is (= 2 (count (-> result :by-date (get "2022-10-12"))))))))
+      (is (= 2 (count (-> result :by-date (get "2022-10-12")))))))
+  (testing "weights with decimal points"
+    (let [result (parser/parse-history "2022-10-12 squat 66.6x5")]
+      (is (not (:errs result))))))
