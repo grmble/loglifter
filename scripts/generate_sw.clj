@@ -2,7 +2,8 @@
 (ns generate-sw
   (:require
    [selmer.parser :as sp]
-   [clojure.java.io :as io]))
+   [clojure.java.io :as io]
+   [clojure.string :as string]))
 
 (defn copy-template [src dst ctx]
   (println "generating " (str dst))
@@ -26,7 +27,10 @@
 ;; task runner exec runs this too
 (when *file* (System/getProperty "babashka.file")
       (let [part (first *command-line-args*)
-            base-path (if part (str "/learn-you-a-keeframe/" part) "")
+            base-path (cond
+                        (not part) ""
+                        (string/starts-with? part "part") (str "/learn-you-a-keeframe/" part)
+                        :else "/loglifter")
             debug?    (not part)]
         (generate-sw-files
          {:base-path base-path

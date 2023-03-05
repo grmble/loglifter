@@ -1,12 +1,17 @@
 {:paths ["scripts"]
  :tasks
  {:init    (def task-opts (let [part (first *command-line-args*)
-                                base-path (if part (str "/learn-you-a-keeframe/" part) "")
+                                base-path (cond
+                                            (not part) ""
+                                            (string/starts-with? part "part")
+                                            (str "/learn-you-a-keeframe/" part)
+                                            :else "/loglifter")
                                 debug?    (not part)]
                             {:base-path base-path
                              :debug?    debug?}))
   clean    {:doc "Remove 'public/{js,index.html,manifest.json}."
-            :requires ([babashka.fs :as fs])
+            :requires ([babashka.fs :as fs]
+                       [clojure.string :as string])
             :task (do (println "Removing 'public/{js,index.html,sw.js,manifest.json}.")
                       (fs/delete-tree "public/js")
                       (fs/delete-if-exists "public/index.html")

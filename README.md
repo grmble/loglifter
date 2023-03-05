@@ -1,13 +1,32 @@
-# Learn You A Kee-Frame
+# Loglifter - The Lifter's Log
 
-Example project to teach myself kee-frame/re-frame
+A logging application for weight training.
 
-Various versions of the program are online on
-the project's github pages:
+Remembers your weights and knows about training programs,
+just go to the gym and do what the phone is telling you to.
 
-https://grmble.github.io/learn-you-a-keeframe/
+Progressive web app - use in the browser or install
+it to your phone (will work without internet access!)
+
+https://grmble.github.io/loglifter/
 
 
-There are blog posts as well:
+This started as an example project for teaching myself kee-frame,
+here are the blog posts:
 
 https://grmble.github.io/tags-output/lyakf/
+
+
+## Local development
+
+You need to have babashka installed: https://github.com/babashka/babashka#installation
+
+Get the javascript dependencies: `yarn` (or `npm install`)
+
+* Overview of tasks: `bb tasks`
+* Clean the local dev environment: `bb clean`
+* Start the local dev environment: `bb watch`.
+
+Alternatively, you may want to `bb start` once, then
+run multiple commands like `bb watch`, `bb release`
+

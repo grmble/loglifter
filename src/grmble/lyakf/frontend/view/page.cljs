@@ -20,7 +20,7 @@
     [:nav.navbar.is-info>div.container
      [:div.navbar-brand
       [:a.navbar-item {:href  (k/path-for [:home])
-                       :style {:font-weight :bold}} "Learn You A Kee-Frame"]
+                       :style {:font-weight :bold}} "Loglifter"]
       [:span.navbar-burger.burger
        {:data-target :nav-menu
         :on-click #(swap! expanded? not)

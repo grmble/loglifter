@@ -1,7 +1,7 @@
 {
-    "name": "Learn You A Kee-Frame - {{ part |capitalize}}",
-    "short_name": "lyakf-{{ part }}",
-    "description": "Example PWA using re-frame/kee-frame",
+    "name": "Loglifter - The Lifter's Log",
+    "short_name": "Loglifter",
+    "description": "Remembers your weights and your training plan",
     "start_url": "{{ base-path }}/",
     "id": "{{ base-path }}/",
     "prefer_related_applications": false,
