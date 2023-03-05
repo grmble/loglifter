@@ -3,7 +3,7 @@
   (:require
    [selmer.parser :as sp]
    [clojure.java.io :as io]
-   [clojure.string :as string]))
+   [clojure.string :as str]))
 
 (defn copy-template [src dst ctx]
   (println "generating " (str dst))
@@ -29,7 +29,7 @@
       (let [part (first *command-line-args*)
             base-path (cond
                         (not part) ""
-                        (string/starts-with? part "part") (str "/learn-you-a-keeframe/" part)
+                        (str/starts-with? part "part") (str "/learn-you-a-keeframe/" part)
                         :else "/loglifter")
             debug?    (not part)]
         (generate-sw-files

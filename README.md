@@ -25,8 +25,20 @@ Get the javascript dependencies: `yarn` (or `npm install`)
 
 * Overview of tasks: `bb tasks`
 * Clean the local dev environment: `bb clean`
-* Start the local dev environment: `bb watch`.
+* Start the local dev environment: `bb watch`
 
 Alternatively, you may want to `bb start` once, then
-run multiple commands like `bb watch`, `bb release`
+jack in from Calva using the `shadowcljs` option.
+
+The "re-com" warnings are coming from `re-frisk`, ignore for now.
+
+
+## Releasing
+
+* `bb release` to build a release version for local testing (no path prefix)
+* `bb release partX` to release a version for the learn-you-a-keeframe blog
+* `bb release loglifter` to release a version for the loglifter ghpages
+
+Then upload to the gh pages branch (`git switch --orphan gh-pages` is your friend)
+
 

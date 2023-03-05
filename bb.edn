@@ -1,17 +1,17 @@
 {:paths ["scripts"]
  :tasks
- {:init    (def task-opts (let [part (first *command-line-args*)
+ {:requires ([clojure.string :as str])
+  :init    (def task-opts (let [part (first *command-line-args*)
                                 base-path (cond
                                             (not part) ""
-                                            (string/starts-with? part "part")
+                                            (str/starts-with? part "part")
                                             (str "/learn-you-a-keeframe/" part)
                                             :else "/loglifter")
                                 debug?    (not part)]
                             {:base-path base-path
                              :debug?    debug?}))
   clean    {:doc "Remove 'public/{js,index.html,manifest.json}."
-            :requires ([babashka.fs :as fs]
-                       [clojure.string :as string])
+            :requires ([babashka.fs :as fs])
             :task (do (println "Removing 'public/{js,index.html,sw.js,manifest.json}.")
                       (fs/delete-tree "public/js")
                       (fs/delete-if-exists "public/index.html")
@@ -37,6 +37,8 @@
   watcht   {:doc "Watch shadow-cljs app+test."
             :depends [clean template]
             :task (shell "yarn shadow-cljs watch app test")}
+  tree     {:doc "Dependency tree"
+            :task (shell "clojure -X:deps tree")}
   release  {:doc "Release build with custom base path.
                
                An optional partX can be given, a BASE-PATH will be constructed."
@@ -50,8 +52,8 @@
                                 (pr-str base-path)
                                 "}}'"))
                     (fs/delete "public/js/main.js.map")
-                    (println "Creating learn-you-a-keeframe.tgz")
-                    (shell {:dir "public"} "tar zcvf ../learn-you-a-keeframe.tgz ."))}}}
+                    (println "Creating loglifter-ghpages.tgz")
+                    (shell {:dir "public"} "tar zcvf ../loglifter-ghpages.tgz --exclude=js/report.html ."))}}}
 
 
 (comment

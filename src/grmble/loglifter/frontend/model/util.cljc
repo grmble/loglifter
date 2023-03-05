@@ -1,5 +1,5 @@
 (ns grmble.loglifter.frontend.model.util
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as str]))
 
 (defn slug?
   "Is it a keyword, does it start with a-z and only contains a-z,0-9 and -?"
@@ -8,7 +8,7 @@
 
 (defn live-string?
   "Is it a non-blank string?" [s]
-  (and (string? s) (not (string/blank? s))))
+  (and (string? s) (not (str/blank? s))))
 
 (defn map-by [f coll]
   (into {} (map (fn [x] [(f x) x])) coll))

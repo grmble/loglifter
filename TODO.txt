@@ -1,5 +1,6 @@
-(A) move to new repo/project: loglifter
 (A) interpreter for calculations, configurable exercises +configurator
 (B) charts +charts +part6
 (B) support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight +configurator
 (B) weight tracker
+
+x (A) 2023-03-05 move to new repo/project: loglifter
