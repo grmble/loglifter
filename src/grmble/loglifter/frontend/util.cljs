@@ -1,4 +1,4 @@
-(ns grmble.lyakf.frontend.util
+(ns grmble.loglifter.frontend.util
   (:require
    [re-frame.core]))
 

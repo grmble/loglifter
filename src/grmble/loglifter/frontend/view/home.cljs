@@ -1,7 +1,7 @@
-(ns grmble.lyakf.frontend.view.home
+(ns grmble.loglifter.frontend.view.home
   (:require
-   [grmble.lyakf.frontend.util :refer [<sub >evt]]
-   [grmble.lyakf.frontend.model.parser :as parser]
+   [grmble.loglifter.frontend.util :refer [<sub >evt]]
+   [grmble.loglifter.frontend.model.parser :as parser]
    [reagent.core :as r]))
 
 (def x-mark "\u2718")

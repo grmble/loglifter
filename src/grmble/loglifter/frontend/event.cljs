@@ -1,14 +1,14 @@
-(ns grmble.lyakf.frontend.event
+(ns grmble.loglifter.frontend.event
   (:require
    [clojure.string :as str]
-   [grmble.lyakf.frontend.date]
-   [grmble.lyakf.frontend.storage.foreign :as foreign]
-   [grmble.lyakf.frontend.storage.local]
-   [grmble.lyakf.frontend.model.program :as program]
+   [grmble.loglifter.frontend.date]
+   [grmble.loglifter.frontend.storage.foreign :as foreign]
+   [grmble.loglifter.frontend.storage.local]
+   [grmble.loglifter.frontend.model.program :as program]
    [ajax.core :as ajax]
    [medley.core :as medley]
    [re-frame.core :as rf]
-   [grmble.lyakf.frontend.model.parser :as parser]))
+   [grmble.loglifter.frontend.model.parser :as parser]))
 
 ;;
 ;; https://day8.github.io/re-frame/Loading-Initial-Data/
@@ -21,7 +21,7 @@
                                  :on-success [:config-loaded]
                                  :on-error [:config-not-found]}}))
 (rf/reg-event-fx :config-loaded
-                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:current :exercises :programs])]
+                 [(rf/inject-cofx :grmble.loglifter.frontend.storage.local/load [:current :exercises :programs])]
                  (fn [{:keys [db current exercises programs]} [_ config]]
                    {:db (cond-> (assoc db :config (merge (:config db) config))
                           true      (assoc-in [:transient :initialized?] true)
@@ -52,7 +52,7 @@
                    #(assoc % :slug slug :data nil))]
     {:db db
 
-     :grmble.lyakf.frontend.storage.local/store
+     :grmble.loglifter.frontend.storage.local/store
      {:kvs {"current" (foreign/current->js (:current db))}
       :db db}}))
 
@@ -81,11 +81,11 @@
                (update :current #(assoc % :data data)))]
     {:db db
 
-     :grmble.lyakf.frontend.storage.local/store
+     :grmble.loglifter.frontend.storage.local/store
      {:kvs {:current (foreign/current->js (:current db))}
       :db db}
 
-     :grmble.lyakf.frontend.storage.local/append-history
+     :grmble.loglifter.frontend.storage.local/append-history
      {:current-date current-date
       :slug (:slug xref)
       :repsets repsets}}))
@@ -105,23 +105,23 @@
                  (fn [{:keys [db]} [_]]
                    {:db db
 
-                    :grmble.lyakf.frontend.storage.local/store
+                    :grmble.loglifter.frontend.storage.local/store
                     {:kvs {:snapshot (foreign/current->js (:current db))}
                      :db db}}))
 
 (rf/reg-event-fx :restore-snapshot
-                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load [:snapshot])]
+                 [(rf/inject-cofx :grmble.loglifter.frontend.storage.local/load [:snapshot])]
                  (fn [{:keys [db snapshot]} [_]]
                    {:db (cond-> db
                           snapshot  (assoc :current (foreign/js->current snapshot)))
 
-                    :grmble.lyakf.frontend.storage.local/store
+                    :grmble.loglifter.frontend.storage.local/store
                     {:kvs {:current snapshot}
                      :db db}}))
 
 
 (rf/reg-event-fx :load-history
-                 [(rf/inject-cofx :grmble.lyakf.frontend.storage.local/load-history)]
+                 [(rf/inject-cofx :grmble.loglifter.frontend.storage.local/load-history)]
                  (fn [{:keys [db load-history]} [_]]
                    {:db (assoc-in db [:transient :history] load-history)}))
 
@@ -138,5 +138,5 @@
                                              :msg (str "There were errors in the following lines: "
                                                        (str/join ", " (keys errs)))}))
 
-                      :grmble.lyakf.frontend.storage.local/store-history
+                      :grmble.loglifter.frontend.storage.local/store-history
                       result})))

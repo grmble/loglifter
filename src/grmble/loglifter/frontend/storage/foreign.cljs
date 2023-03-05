@@ -1,12 +1,12 @@
-(ns grmble.lyakf.frontend.storage.foreign
+(ns grmble.loglifter.frontend.storage.foreign
   "Convert app db parts into js objects.
 
    This is very ugly.  I have plans, but for now we will live
    with the ugly.
    "
   (:require
-   [grmble.lyakf.frontend.model.exercise :as exercise]
-   [grmble.lyakf.frontend.model.program :as program]
+   [grmble.loglifter.frontend.model.exercise :as exercise]
+   [grmble.loglifter.frontend.model.program :as program]
    [medley.core :as medley]))
 
 

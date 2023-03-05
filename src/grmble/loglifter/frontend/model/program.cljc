@@ -1,10 +1,10 @@
-(ns grmble.lyakf.frontend.model.program
+(ns grmble.loglifter.frontend.model.program
   (:require
    #?(:cljs [cljs.spec.alpha :as s]
       :clj [clojure.spec.alpha :as s])
    #?(:cljs [cljs.pprint :refer [pprint]]
       :clj [clojure.pprint :refer [pprint]])
-   [grmble.lyakf.frontend.model.util :as util]
+   [grmble.loglifter.frontend.model.util :as util]
    [medley.core :as medley]
    [cuerdas.core :as cuerdas]))
 

@@ -1,6 +1,6 @@
-(ns grmble.lyakf.frontend.view.dev
+(ns grmble.loglifter.frontend.view.dev
   (:require
-   [grmble.lyakf.frontend.util :refer [>evt]]))
+   [grmble.loglifter.frontend.util :refer [>evt]]))
 
 (defn link-entry
   ([url] (link-entry url url))

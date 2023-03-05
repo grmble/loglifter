@@ -1,6 +1,6 @@
-(ns grmble.lyakf.frontend.view.config
+(ns grmble.loglifter.frontend.view.config
   (:require
-   [grmble.lyakf.frontend.util :refer [<sub >evt]]))
+   [grmble.loglifter.frontend.util :refer [<sub >evt]]))
 
 (defn config-tab []
   (let [programs (<sub [:sorted-programs :name])]

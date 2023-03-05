@@ -46,7 +46,7 @@
                     (println "Build for deployment.")
                     (shell (str "yarn shadow-cljs release app --config-merge "
                                 "'{:closure-defines "
-                                "  {grmble.lyakf.frontend.main/BASE-PATH "
+                                "  {grmble.loglifter.frontend.main/BASE-PATH "
                                 (pr-str base-path)
                                 "}}'"))
                     (fs/delete "public/js/main.js.map")

@@ -1,4 +1,4 @@
-(ns grmble.lyakf.frontend.date
+(ns grmble.loglifter.frontend.date
   (:require
    [re-frame.core :as rf]))
 

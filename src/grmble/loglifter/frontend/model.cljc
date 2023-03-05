@@ -1,10 +1,10 @@
-(ns grmble.lyakf.frontend.model
+(ns grmble.loglifter.frontend.model
   (:require
    #?(:cljs [cljs.spec.alpha :as s]
       :clj [clojure.spec.alpha :as s])
-   [grmble.lyakf.frontend.model.exercise :as exercise]
-   [grmble.lyakf.frontend.model.program :as program]
-   [grmble.lyakf.frontend.model.util :as util]))
+   [grmble.loglifter.frontend.model.exercise :as exercise]
+   [grmble.loglifter.frontend.model.program :as program]
+   [grmble.loglifter.frontend.model.util :as util]))
 
 
 (s/def ::db-spec (s/keys :req-un [::transient
@@ -22,15 +22,15 @@
 (s/def ::config (s/keys :req-un [::show-dev-tab?]))
 (s/def ::show-dev-tab? boolean?)
 
-(s/def ::current (s/keys :req-un [:grmble.lyakf.frontend.model.program/slug ::weights]
-                         :opt-un [:grmble.lyakf.frontend.model.program/data]))
+(s/def ::current (s/keys :req-un [:grmble.loglifter.frontend.model.program/slug ::weights]
+                         :opt-un [:grmble.loglifter.frontend.model.program/data]))
 
 (s/def ::programs
-  (s/map-of util/slug? :grmble.lyakf.frontend.model.program/program))
+  (s/map-of util/slug? :grmble.loglifter.frontend.model.program/program))
 (s/def ::exercises
-  (s/map-of util/slug? :grmble.lyakf.frontend.model.exercise/exercise))
+  (s/map-of util/slug? :grmble.loglifter.frontend.model.exercise/exercise))
 (s/def ::weights
-  (s/map-of util/slug? :grmble.lyakf.frontend.model.exercise/weight))
+  (s/map-of util/slug? :grmble.loglifter.frontend.model.exercise/weight))
 
 (def default-db
   {:transient {:initialized? false}

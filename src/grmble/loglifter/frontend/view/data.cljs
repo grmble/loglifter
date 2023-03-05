@@ -1,7 +1,7 @@
-(ns grmble.lyakf.frontend.view.data
+(ns grmble.loglifter.frontend.view.data
   (:require
    ["codemirror" :refer [EditorView basicSetup]]
-   [grmble.lyakf.frontend.util :refer [<sub >evt]]
+   [grmble.loglifter.frontend.util :refer [<sub >evt]]
    [reagent.core :as r]))
 
 ;; the ^js hint fixes the "can  not infer" warning

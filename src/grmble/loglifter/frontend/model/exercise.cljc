@@ -1,8 +1,8 @@
-(ns grmble.lyakf.frontend.model.exercise
+(ns grmble.loglifter.frontend.model.exercise
   (:require
    #?(:cljs [cljs.spec.alpha :as s]
       :clj [clojure.spec.alpha :as s])
-   [grmble.lyakf.frontend.model.util :as util]))
+   [grmble.loglifter.frontend.model.util :as util]))
 
 ;; the weight here is just a default
 ;; current weights are in :current :weights

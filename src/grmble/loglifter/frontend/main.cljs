@@ -1,10 +1,10 @@
-(ns grmble.lyakf.frontend.main
+(ns grmble.loglifter.frontend.main
   (:require
-   [grmble.lyakf.frontend.model :as  model]
-   [grmble.lyakf.frontend.event]
-   [grmble.lyakf.frontend.sub]
-   [grmble.lyakf.frontend.view.page :as page]
-   [grmble.lyakf.frontend.util :refer [<sub >evt]]
+   [grmble.loglifter.frontend.model :as  model]
+   [grmble.loglifter.frontend.event]
+   [grmble.loglifter.frontend.sub]
+   [grmble.loglifter.frontend.view.page :as page]
+   [grmble.loglifter.frontend.util :refer [<sub >evt]]
    [day8.re-frame.http-fx]
 
    [kee-frame.core :as k]
@@ -44,7 +44,7 @@
   (k/start! {;; renders into dom element #app - hard coded
              :root-component [loader [page/current-page]]
              :initial-db model/default-db
-             :app-db-spec :grmble.lyakf.frontend.model/db-spec
+             :app-db-spec :grmble.loglifter.frontend.model/db-spec
              :routes routes
              :hash-routing? true
              :base-path BASE-PATH}))

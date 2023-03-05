@@ -1,9 +1,9 @@
-(ns grmble.lyakf.frontend.model.program-test
+(ns grmble.loglifter.frontend.model.program-test
   (:require
    #?(:clj [clojure.test :refer [deftest testing is]]
       :cljs [cljs.test :refer-macros [deftest testing is]])
-   [grmble.lyakf.frontend.model.exercise :as exercise]
-   [grmble.lyakf.frontend.model.program :as program]))
+   [grmble.loglifter.frontend.model.exercise :as exercise]
+   [grmble.loglifter.frontend.model.program :as program]))
 
 (defn- workout-indexes [selectors]
   (set

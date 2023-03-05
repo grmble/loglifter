@@ -1,6 +1,6 @@
-(ns grmble.lyakf.frontend.model.parser
+(ns grmble.loglifter.frontend.model.parser
   "Parser for log entries / rep sets"
-  #?(:cljs (:require-macros [grmble.lyakf.frontend.model.parser]))
+  #?(:cljs (:require-macros [grmble.loglifter.frontend.model.parser]))
   (:require
    [clojure.string :as str]
    #?(:cljs [instaparse.core :as insta :refer-macros [defparser]]

@@ -5,7 +5,7 @@
  :builds
  {:app
   {:target :browser
-   :modules {:main {:init-fn grmble.lyakf.frontend.main/init!
+   :modules {:main {:init-fn grmble.loglifter.frontend.main/init!
                     :preloads [re-frisk.preload]}}
    :js-options
    {:resolve {"react" {:target :npm

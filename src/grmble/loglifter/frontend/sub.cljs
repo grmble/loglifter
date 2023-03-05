@@ -1,6 +1,6 @@
-(ns grmble.lyakf.frontend.sub
+(ns grmble.loglifter.frontend.sub
   (:require
-   [grmble.lyakf.frontend.model.program :as program]
+   [grmble.loglifter.frontend.model.program :as program]
    [re-frame.core :as rf]))
 
 ;; (fn [db [& args]] (get-in db args))

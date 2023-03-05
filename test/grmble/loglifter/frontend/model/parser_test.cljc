@@ -1,8 +1,8 @@
-(ns grmble.lyakf.frontend.model.parser-test
+(ns grmble.loglifter.frontend.model.parser-test
   (:require
    #?(:clj [clojure.test :refer [deftest testing is]]
       :cljs [cljs.test :refer-macros [deftest testing is]])
-   [grmble.lyakf.frontend.model.parser :as parser]))
+   [grmble.loglifter.frontend.model.parser :as parser]))
 
 (deftest parse-history
   (testing "collection of errors and history entries by date"

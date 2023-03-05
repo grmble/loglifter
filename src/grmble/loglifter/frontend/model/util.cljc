@@ -1,4 +1,4 @@
-(ns grmble.lyakf.frontend.model.util
+(ns grmble.loglifter.frontend.model.util
   (:require [clojure.string :as string]))
 
 (defn slug?

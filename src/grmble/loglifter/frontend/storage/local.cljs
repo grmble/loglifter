@@ -1,6 +1,6 @@
-(ns grmble.lyakf.frontend.storage.local
+(ns grmble.loglifter.frontend.storage.local
   (:require
-   [grmble.lyakf.frontend.model]
+   [grmble.loglifter.frontend.model]
    [cljs.spec.alpha :as s]
    [clojure.string :as str]
    [re-frame.core :as rf]))
@@ -14,7 +14,7 @@
    If db is present, it will be validated using spec.alpha"
   ([{kvs :kvs db :db}]
    (if (or (not db)
-           (s/valid? :grmble.lyakf.frontend.model/db-spec db))
+           (s/valid? :grmble.loglifter.frontend.model/db-spec db))
      (doseq [[k v] kvs]
        (when (and k v)
          (js/window.localStorage.setItem (str prefix (name k)) (js/JSON.stringify v))))
