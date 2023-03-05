@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Loglifter</title>
+    <meta description="The Lifter's Log" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bulma.min.css">
+    <script src="js/main.js" defer></script>
+    
+    <!-- google uses manifest.json, will this fix offline mode? -->
+    <link rel="manifest" href="/loglifter/manifest.json">
+    <script src="js/register_sw.js" defer></script>
+    
+</head>
+
+<body>
+    <div id="app">
+        <!-- copied out of developer console - update as necessary -->
+        <nav class="navbar is-info">
+            <div class="container">
+                <div class="navbar-brand"><a href="/" style="font-weight: bold;" class="navbar-item">Loglifter</a><span
+                        data-target="nav-menu"
+                        class="navbar-burger burger"><span></span><span></span><span></span></span></div>
+                <div class="navbar-menu" id="nav-menu">
+                    <div class="navbar-start"><a href="#/" class="navbar-item">Home</a><a href="#/data"
+                            class="navbar-item">Data</a><a href="#/config" class="navbar-item">Config</a></div>
+                </div>
+            </div>
+        </nav><button class="button is-loading is-warning"></button>
+    </div>
+</body>
+
+</html>
