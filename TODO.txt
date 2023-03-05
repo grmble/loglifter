@@ -1,13 +1,5 @@
+(A) move to new repo/project: loglifter
+(A) interpreter for calculations, configurable exercises +configurator
 (B) charts +charts +part6
-(B) focus first uncompleted exercise after completion +ux +part6
-(C) UX improvements (error on blur, instant feedback on correction) - state charts? +ux +part6
-(C) UX improvements: number input for reset +ux +part6
-(C) skip workouts +ux +part6
-(C) choose alternative exercise e.g. overhead instead of bench +ux +part6
-
-x (A) display errors e.g. when saving from the data tab +part5
-x (A) history +part5
-x (A) resetting exercises from the wizard +part5
-x (A) snapshot / restore for :current in dev tab +part5
-x (A) storage +storage +part5
-x (A) vector -> string -> vector: history items / codemirror +part5
+(B) support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight +configurator
+(B) weight tracker

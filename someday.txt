@@ -1,8 +1,8 @@
-configurable training programs +configurator
-support for bodyweight/kettlebell exercises - progression on reps/sets instead of weight +configurator
-weight tracker
-sync to desktop computers and/or other phones +sync
+focus first uncompleted exercise after completion +ux +part6
+UX improvements (error on blur, instant feedback on correction) - state charts? +ux +part6
+UX improvements: number input for reset +ux +part6
+skip workouts +ux +part6
+choose alternative exercise e.g. overhead instead of bench +ux +part6sync to desktop computers and/or other phones +sync
 lezer parser for codemirror syntax hightlighting
 compile time conditionalize expound (cljs.pprint!) and spec.alpha  +no-keeframe +footprint
 no timbre, encore, re-chain, cuerdas and pez-clerk (but scrolling!) +no-keeframe +footprint
-
